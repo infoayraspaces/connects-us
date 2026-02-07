@@ -1,31 +1,26 @@
-import { Users, Leaf, Wifi, ShieldCheck, Sun, Droplets } from "lucide-react";
+import { Users, Leaf, Wifi, ShieldCheck, Droplets } from "lucide-react";
 import { motion } from "framer-motion";
 
 const benefits = [
   {
     icon: Users,
     title: "Comunidad real",
-    description: "Cenas compartidas, eventos y conexiones que duran. Aquí nadie vive solo.",
+    description: "Aquí nadie vive solo. Una convivencia natural entre personas que se apoyan en el día a día.",
   },
   {
     icon: Leaf,
     title: "Sostenibilidad",
-    description: "Paneles solares, recolección de agua lluvia y huertas urbanas en cada sede.",
+    description: "Sistemas de recolección de agua lluvia y prácticas responsables en cada sede.",
   },
   {
     icon: Wifi,
     title: "Productividad",
-    description: "Coworking 24/7, WiFi de alta velocidad y espacios diseñados para enfocarte.",
+    description: "Internet de fibra óptica de alta velocidad y espacios diseñados para que puedas enfocarte.",
   },
   {
     icon: ShieldCheck,
     title: "Todo incluido",
     description: "Servicios, limpieza, mantenimiento y comunidad. Un solo pago, cero preocupaciones.",
-  },
-  {
-    icon: Sun,
-    title: "Bienestar",
-    description: "Yoga, meditación, jardines y espacios pensados para tu salud mental.",
   },
   {
     icon: Droplets,
@@ -55,10 +50,10 @@ const BenefitsSection = () => {
             ¿Por qué AYRA?
           </span>
           <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-4">
-            Más que un lugar para vivir
+            Lo que incluye vivir en AYRA
           </h2>
           <p className="text-muted-foreground text-lg">
-            Diseñamos cada espacio y experiencia para que tu vida en Bogotá sea extraordinaria.
+            Todo pensado para que llegues y vivas, sin preocuparte por nada más.
           </p>
         </div>
 

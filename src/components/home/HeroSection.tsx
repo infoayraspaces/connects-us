@@ -29,10 +29,10 @@ const HeroSection = () => {
             Coliving en Bogotá
           </span>
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-background leading-tight mb-6">
-            Tu hogar con propósito en Bogotá
+            Llega a Bogotá y vive sin complicaciones
           </h1>
           <p className="text-lg md:text-xl text-background/85 font-body leading-relaxed mb-8 max-w-xl">
-            Vive en comunidad, con sostenibilidad y bienestar. Espacios diseñados para profesionales jóvenes y nómadas digitales que buscan más que un lugar donde dormir.
+            Espacios completamente equipados, seguros y con todo incluido. Para profesionales que llegan a Bogotá y quieren un hogar de verdad, no un lugar temporal.
           </p>
           <div className="flex flex-wrap gap-4">
             <Button variant="hero" size="xl" asChild>

@@ -80,7 +80,7 @@ const LocationDetail = () => {
             duration: 0.4,
             delay: i * 0.1
           }} className="rounded-xl overflow-hidden">
-                
+                <img src={img} alt={`${location.name} - imagen ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
               </motion.div>)}
           </div>
         </div>

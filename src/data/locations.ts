@@ -1,6 +1,11 @@
 import chapineroImg from "@/assets/location-chapinero.jpg";
 import usaquenImg from "@/assets/location-usaquen.jpg";
 import candelariaImg from "@/assets/location-candelaria.jpg";
+import modeliaPatioImg from "@/assets/modelia-patio.jpg";
+import modeliaKitchen1Img from "@/assets/modelia-kitchen-1.jpg";
+import modeliaKitchen2Img from "@/assets/modelia-kitchen-2.jpg";
+import modeliaKitchen3Img from "@/assets/modelia-kitchen-3.jpg";
+import modeliaMezzanineImg from "@/assets/modelia-mezzanine.jpg";
 
 export interface RoomType {
   name: string;
@@ -31,8 +36,8 @@ export const locations: Location[] = [
     tagline: "Confort, seguridad y ubicación estratégica",
     description:
       "Ubicado en Modelia, a solo 3 minutos caminando del Centro Comercial Hayuelos y a 15 minutos del aeropuerto. Cerca de la Avenida El Dorado y las estaciones de TransMilenio Modelia y Normandía. Ideal para quienes llegan a Bogotá y buscan comodidad, seguridad y una ubicación estratégica con todo incluido.",
-    image: usaquenImg,
-    gallery: [usaquenImg, usaquenImg, usaquenImg],
+    image: modeliaPatioImg,
+    gallery: [modeliaKitchen1Img, modeliaMezzanineImg, modeliaKitchen2Img],
     amenities: [
       "Zona de trabajo silenciosa",
       "Cocina equipada compartida",

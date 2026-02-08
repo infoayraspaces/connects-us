@@ -15,7 +15,7 @@ const LocationsHighlight = () => {
             Tres barrios, una comunidad
           </h2>
           <p className="text-muted-foreground text-lg">
-            Cada sede tiene su personalidad, pero todas comparten los mismos valores.
+            Cada sede tiene su propia ubicación y ventajas, pero todas comparten los mismos valores.
           </p>
         </div>
 

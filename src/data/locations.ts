@@ -6,6 +6,9 @@ import modeliaKitchen1Img from "@/assets/modelia-kitchen-1.jpg";
 import modeliaKitchen2Img from "@/assets/modelia-kitchen-2.jpg";
 import modeliaKitchen3Img from "@/assets/modelia-kitchen-3.jpg";
 import modeliaMezzanineImg from "@/assets/modelia-mezzanine.jpg";
+import modeliaRoom1Img from "@/assets/modelia-room-1.jpg";
+import modeliaRoom2Img from "@/assets/modelia-room-2.jpg";
+import modeliaRoom3Img from "@/assets/modelia-room-3.jpg";
 
 export interface RoomType {
   name: string;
@@ -23,6 +26,7 @@ export interface Location {
   gallery: string[];
   amenities: string[];
   roomTypes: RoomType[];
+  roomImages?: string[];
   address: string;
   mapUrl: string;
   faqs: { question: string; answer: string }[];
@@ -53,6 +57,7 @@ export const locations: Location[] = [
       { name: "Suite Premium", priceFrom: "$2.200.000 COP", description: "Habitación amplia con baño y balcón privado" },
       { name: "Habitación Doble", priceFrom: "$1.000.000 COP", description: "Habitación compartida con escritorios individuales" },
     ],
+    roomImages: [modeliaRoom1Img, modeliaRoom2Img, modeliaRoom3Img],
     address: "Calle 25G #75-30, Modelia, Bogotá",
     mapUrl: "https://maps.google.com/?q=4.6716,-74.1214",
     faqs: [

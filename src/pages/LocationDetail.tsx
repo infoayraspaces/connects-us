@@ -114,6 +114,15 @@ const LocationDetail = () => {
                 </div>
               </div>)}
           </div>
+          {location.roomImages && location.roomImages.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+              {location.roomImages.map((img, i) => (
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className="rounded-xl overflow-hidden aspect-[4/3]">
+                  <img src={img} alt={`${location.name} - habitación ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

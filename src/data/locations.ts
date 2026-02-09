@@ -9,6 +9,9 @@ import modeliaMezzanineImg from "@/assets/modelia-mezzanine.jpg";
 import modeliaRoom1Img from "@/assets/modelia-room-1.jpg";
 import modeliaRoom2Img from "@/assets/modelia-room-2.jpg";
 import modeliaRoom3Img from "@/assets/modelia-room-3.jpg";
+import modeliaCoworkImg from "@/assets/modelia-cowork.jpg";
+import modeliaPatioWorkImg from "@/assets/modelia-patio-work.jpg";
+import modeliaPatioExteriorImg from "@/assets/modelia-patio-exterior.jpg";
 
 export interface RoomType {
   name: string;
@@ -33,6 +36,8 @@ export interface Location {
   address: string;
   mapUrl: string;
   embedMapUrl?: string;
+  amenityImages?: string[];
+  virtualTourUrl?: string;
   faqs: { question: string; answer: string }[];
 }
 
@@ -46,6 +51,7 @@ export const locations: Location[] = [
       "Ubicado en Modelia, a solo 3 minutos caminando del Centro Comercial Hayuelos y a 15 minutos del aeropuerto. Cerca de la Avenida El Dorado y las estaciones de TransMilenio Modelia y Normandía. Ideal para quienes llegan a Bogotá y buscan comodidad, seguridad y una ubicación estratégica con todo incluido.",
     image: modeliaPatioImg,
     gallery: [modeliaKitchen1Img, modeliaMezzanineImg, modeliaKitchen2Img],
+    amenityImages: [modeliaKitchen1Img, modeliaMezzanineImg, modeliaKitchen2Img, modeliaCoworkImg, modeliaPatioWorkImg, modeliaPatioExteriorImg],
     amenities: [
       "Zona de trabajo silenciosa",
       "Cocina equipada compartida",
@@ -83,9 +89,10 @@ export const locations: Location[] = [
       },
     ],
     roomImages: [modeliaRoom1Img, modeliaRoom2Img, modeliaRoom3Img],
-    address: "Calle 25G #75-30, Modelia, Bogotá",
+    address: "Carrera 81Bis #22-62, Modelia, Bogotá",
     mapUrl: "https://maps.google.com/?q=4.6716,-74.1214",
-    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.8!2d-74.1214!3d4.6716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9c5e2a1b3c5d%3A0x1234567890abcdef!2sCalle%2025G%20%2375-30%2C%20Modelia%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
+    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d993.7!2d-74.12568!3d4.66887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bf33e1c1c1d%3A0x5f1c1c1c1c1c1c1c!2sCarrera%2081Bis%20%2322-62%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
+    virtualTourUrl: "https://vivanova.com.co/tour/La_Nevera/",
     faqs: [
       { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 1 mes." },
       { question: "¿Hay estacionamiento?", answer: "No tenemos estacionamiento para autos, pero sí un amplio parking de bicicletas." },

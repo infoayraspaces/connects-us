@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Check, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Check, ArrowLeft, ChevronLeft, ChevronRight, X, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 const LocationDetail = () => {
   const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const {
     id
   } = useParams<{
@@ -58,34 +59,19 @@ const LocationDetail = () => {
         </div>
       </section>
 
-      {/* Description */}
+      {/* Description + Virtual Tour */}
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="font-heading text-2xl text-foreground mb-4">Sobre este espacio</h2>
             <p className="text-muted-foreground text-lg leading-relaxed">{location.description}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery - social areas (reduced prominence) */}
-      <section className="pb-12">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
-            {location.gallery.map((img, i) => <motion.div key={i} initial={{
-            opacity: 0,
-            scale: 0.95
-          }} whileInView={{
-            opacity: 1,
-            scale: 1
-          }} viewport={{
-            once: true
-          }} transition={{
-            duration: 0.4,
-            delay: i * 0.1
-          }} className="rounded-xl overflow-hidden aspect-[4/3]">
-                <img src={img} alt={`${location.name} - imagen ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
-              </motion.div>)}
+            {location.virtualTourUrl && (
+              <Button variant="outline" className="mt-6" asChild>
+                <a href={location.virtualTourUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-4 h-4 mr-2" /> Tour virtual
+                </a>
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -94,14 +80,44 @@ const LocationDetail = () => {
       <section className="py-16 bg-warm">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-heading text-2xl text-foreground mb-8">Amenidades</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
             {location.amenities.map(amenity => <div key={amenity} className="flex items-center gap-3 bg-background rounded-lg p-4">
                 <Check className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="text-sm text-foreground">{amenity}</span>
               </div>)}
           </div>
+          {/* Amenity image gallery */}
+          {location.amenityImages && location.amenityImages.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {location.amenityImages.map((img, i) => (
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }} className="rounded-xl overflow-hidden aspect-[4/3] cursor-pointer" onClick={() => setLightboxIndex(i)}>
+                  <img src={img} alt={`${location.name} - amenidad ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
+
+      {/* Amenity Lightbox */}
+      {location.amenityImages && lightboxIndex !== null && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={() => setLightboxIndex(null)}>
+          <button onClick={() => setLightboxIndex(null)} className="absolute top-4 right-4 text-white/70 hover:text-white" aria-label="Cerrar">
+            <X className="w-8 h-8" />
+          </button>
+          {location.amenityImages.length > 1 && (
+            <>
+              <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + location.amenityImages!.length) % location.amenityImages!.length); }} className="absolute left-4 text-white/70 hover:text-white" aria-label="Anterior">
+                <ChevronLeft className="w-10 h-10" />
+              </button>
+              <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % location.amenityImages!.length); }} className="absolute right-4 text-white/70 hover:text-white" aria-label="Siguiente">
+                <ChevronRight className="w-10 h-10" />
+              </button>
+            </>
+          )}
+          <img src={location.amenityImages[lightboxIndex]} alt={`${location.name} - amenidad ${lightboxIndex + 1}`} className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
 
       {/* Room types */}
       <section className="py-16">

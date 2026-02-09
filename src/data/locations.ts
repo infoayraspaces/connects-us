@@ -14,6 +14,9 @@ export interface RoomType {
   name: string;
   priceFrom: string;
   description: string;
+  profile?: string;
+  minimumStay?: string;
+  images?: string[];
 }
 
 export interface Location {
@@ -54,9 +57,30 @@ export const locations: Location[] = [
       "Seguridad 24/7",
     ],
     roomTypes: [
-      { name: "Habitación Tipo 1", priceFrom: "$1.400.000 COP", description: "Espacio privado con buena iluminación" },
-      { name: "Habitación Tipo 2", priceFrom: "$1.250.000 COP", description: "Habitación amplia con baño y balcón privado" },
-      { name: "Habitación Tipo 3", priceFrom: "$1.000.000 COP", description: "Habitación compartida con escritorios individuales" },
+      {
+        name: "Habitación Tipo 1",
+        priceFrom: "$1.400.000 COP",
+        description: "Espacio privado con buena iluminación",
+        profile: "La habitación más amplia de nuestra sede, con iluminación natural gracias a ventanales con vista exterior.",
+        minimumStay: "3 meses",
+        images: [modeliaRoom1Img, modeliaRoom2Img],
+      },
+      {
+        name: "Habitación Tipo 2",
+        priceFrom: "$1.250.000 COP",
+        description: "Habitación amplia con baño y balcón privado",
+        profile: "Una habitación amplia, equipada con nevera minibar y microondas interno dentro de la habitación.",
+        minimumStay: "3 meses",
+        images: [modeliaRoom2Img, modeliaRoom3Img],
+      },
+      {
+        name: "Habitación Tipo 3",
+        priceFrom: "$1.000.000 COP",
+        description: "Habitación compartida con escritorios individuales",
+        profile: "Opción más compacta, pero con todo lo necesario para vivir con comodidad y el estándar AYRA.",
+        minimumStay: "3 meses",
+        images: [modeliaRoom3Img, modeliaRoom1Img],
+      },
     ],
     roomImages: [modeliaRoom1Img, modeliaRoom2Img, modeliaRoom3Img],
     address: "Calle 25G #75-30, Modelia, Bogotá",

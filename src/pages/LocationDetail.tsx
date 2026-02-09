@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { MapPin, Check, ArrowLeft } from "lucide-react";
+import { MapPin, Check, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { locations } from "@/data/locations";
+import { locations, RoomType } from "@/data/locations";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 const LocationDetail = () => {
+  const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const {
     id
   } = useParams<{
@@ -104,14 +108,15 @@ const LocationDetail = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-heading text-2xl text-foreground mb-8">Tipos de habitación</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {location.roomTypes.map(room => <div key={room.name} className="border border-border rounded-xl p-6 hover:shadow-md transition-shadow">
-                <h3 className="font-heading text-xl text-foreground mb-2">{room.name}</h3>
+            {location.roomTypes.map(room => <div key={room.name} onClick={() => { setSelectedRoom(room); setGalleryIndex(0); }} className="border border-border rounded-xl p-6 hover:shadow-md transition-shadow cursor-pointer group">
+                <h3 className="font-heading text-xl text-foreground mb-2 group-hover:text-primary transition-colors">{room.name}</h3>
                 <p className="text-muted-foreground text-sm mb-4">{room.description}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-sm text-muted-foreground">Desde</span>
                   <span className="font-semibold text-lg text-accent">{room.priceFrom}</span>
                   <span className="text-sm text-muted-foreground">/ mes</span>
                 </div>
+                <p className="text-xs text-primary mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver detalles →</p>
               </div>)}
           </div>
           {location.roomImages && location.roomImages.length > 0 && (
@@ -123,6 +128,47 @@ const LocationDetail = () => {
               ))}
             </div>
           )}
+
+          {/* Room Detail Dialog */}
+          <Dialog open={!!selectedRoom} onOpenChange={(open) => !open && setSelectedRoom(null)}>
+            <DialogContent className="max-w-lg">
+              <DialogHeader>
+                <DialogTitle className="font-heading text-xl">{selectedRoom?.name}</DialogTitle>
+                <DialogDescription className="sr-only">Detalles de {selectedRoom?.name}</DialogDescription>
+              </DialogHeader>
+              {selectedRoom?.images && selectedRoom.images.length > 0 && (
+                <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
+                  <img src={selectedRoom.images[galleryIndex]} alt={`${selectedRoom.name} - foto ${galleryIndex + 1}`} className="w-full h-full object-cover" />
+                  {selectedRoom.images.length > 1 && (
+                    <>
+                      <button onClick={() => setGalleryIndex((galleryIndex - 1 + selectedRoom.images!.length) % selectedRoom.images!.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/70 rounded-full p-1 hover:bg-background transition-colors" aria-label="Anterior">
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button onClick={() => setGalleryIndex((galleryIndex + 1) % selectedRoom.images!.length)} className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/70 rounded-full p-1 hover:bg-background transition-colors" aria-label="Siguiente">
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {selectedRoom.images.map((_, i) => (
+                          <span key={i} className={`w-2 h-2 rounded-full ${i === galleryIndex ? 'bg-background' : 'bg-background/50'}`} />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              <p className="text-muted-foreground text-sm leading-relaxed">{selectedRoom?.profile}</p>
+              <div className="flex items-baseline justify-between border-t border-border pt-4">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-sm text-muted-foreground">Desde</span>
+                  <span className="font-semibold text-lg text-accent">{selectedRoom?.priceFrom}</span>
+                  <span className="text-sm text-muted-foreground">/ mes</span>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Estadía mínima: <span className="font-medium text-foreground">{selectedRoom?.minimumStay}</span>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
 

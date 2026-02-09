@@ -64,10 +64,10 @@ const LocationDetail = () => {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="pb-16">
+      {/* Gallery - social areas (reduced prominence) */}
+      <section className="pb-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
             {location.gallery.map((img, i) => <motion.div key={i} initial={{
             opacity: 0,
             scale: 0.95
@@ -79,7 +79,7 @@ const LocationDetail = () => {
           }} transition={{
             duration: 0.4,
             delay: i * 0.1
-          }} className="rounded-xl overflow-hidden">
+          }} className="rounded-xl overflow-hidden aspect-[4/3]">
                 <img src={img} alt={`${location.name} - imagen ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
               </motion.div>)}
           </div>
@@ -125,6 +125,27 @@ const LocationDetail = () => {
           )}
         </div>
       </section>
+
+      {/* Map */}
+      {location.embedMapUrl && (
+        <section className="py-16">
+          <div className="container mx-auto px-4 lg:px-8">
+            <h2 className="font-heading text-2xl text-foreground mb-8">Ubicación</h2>
+            <div className="rounded-xl overflow-hidden aspect-[16/9] max-w-4xl">
+              <iframe
+                src={location.embedMapUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Mapa de ${location.name}`}
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* FAQ */}
       <section className="py-16 bg-warm">

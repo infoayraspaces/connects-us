@@ -29,6 +29,7 @@ export interface Location {
   roomImages?: string[];
   address: string;
   mapUrl: string;
+  embedMapUrl?: string;
   faqs: { question: string; answer: string }[];
 }
 
@@ -53,13 +54,14 @@ export const locations: Location[] = [
       "Seguridad 24/7",
     ],
     roomTypes: [
-      { name: "Habitación Individual", priceFrom: "$1.400.000 COP", description: "Espacio privado con buena iluminación" },
-      { name: "Suite Premium", priceFrom: "$2.200.000 COP", description: "Habitación amplia con baño y balcón privado" },
-      { name: "Habitación Doble", priceFrom: "$1.000.000 COP", description: "Habitación compartida con escritorios individuales" },
+      { name: "Habitación Tipo 1", priceFrom: "$1.400.000 COP", description: "Espacio privado con buena iluminación" },
+      { name: "Habitación Tipo 2", priceFrom: "$1.250.000 COP", description: "Habitación amplia con baño y balcón privado" },
+      { name: "Habitación Tipo 3", priceFrom: "$1.000.000 COP", description: "Habitación compartida con escritorios individuales" },
     ],
     roomImages: [modeliaRoom1Img, modeliaRoom2Img, modeliaRoom3Img],
     address: "Calle 25G #75-30, Modelia, Bogotá",
     mapUrl: "https://maps.google.com/?q=4.6716,-74.1214",
+    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.8!2d-74.1214!3d4.6716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9c5e2a1b3c5d%3A0x1234567890abcdef!2sCalle%2025G%20%2375-30%2C%20Modelia%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
     faqs: [
       { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 1 mes." },
       { question: "¿Hay estacionamiento?", answer: "No tenemos estacionamiento para autos, pero sí un amplio parking de bicicletas." },

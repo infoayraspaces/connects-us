@@ -13,6 +13,21 @@ import modeliaCoworkImg from "@/assets/modelia-cowork.jpg";
 import modeliaPatioWorkImg from "@/assets/modelia-patio-work.jpg";
 import modeliaPatioExteriorImg from "@/assets/modelia-patio-exterior.jpg";
 
+// Teusaquillo imports
+import teusaquilloRoom1_1Img from "@/assets/teusaquillo-room1-1.jpg";
+import teusaquilloRoom1_2Img from "@/assets/teusaquillo-room1-2.jpg";
+import teusaquilloRoom1_3Img from "@/assets/teusaquillo-room1-3.jpg";
+import teusaquilloRoom2_1Img from "@/assets/teusaquillo-room2-1.jpg";
+import teusaquilloRoom2_2Img from "@/assets/teusaquillo-room2-2.jpg";
+import teusaquilloRoom3_1Img from "@/assets/teusaquillo-room3-1.jpg";
+import teusaquilloRoom3_2Img from "@/assets/teusaquillo-room3-2.jpg";
+import teusaquilloStudio1Img from "@/assets/teusaquillo-studio-1.jpg";
+import teusaquilloStudio2Img from "@/assets/teusaquillo-studio-2.jpg";
+import teusaquilloStudio3Img from "@/assets/teusaquillo-studio-3.jpg";
+import teusaquilloCoworkImg from "@/assets/teusaquillo-coworking.jpg";
+import teusaquilloKitchenImg from "@/assets/teusaquillo-kitchen.jpg";
+import teusaquilloLaundryImg from "@/assets/teusaquillo-laundry.jpg";
+
 export interface RoomType {
   name: string;
   priceFrom: string;
@@ -105,30 +120,63 @@ export const locations: Location[] = [
     neighborhood: "Teusaquillo, Bogotá",
     tagline: "Central, caminable y bien conectado",
     description:
-      "Ubicado en Teusaquillo, a 5 minutos caminando del Parkway. Muy cerca de las estaciones de TransMilenio Calle 45 y Universidad Nacional, y a 10 minutos caminando del Centro Comercial Galerías. Una zona central, caminable y bien conectada, perfecta para vivir la ciudad con comodidad.",
-    image: chapineroImg,
-    gallery: [chapineroImg, chapineroImg, chapineroImg],
+      "Ubicado en Teusaquillo, en una zona central, caminable y bien conectada. Muy cerca de las estaciones de TransMilenio Calle 45 y Universidad Nacional, y a pocos minutos del Parkway y el Centro Comercial Galerías. Perfecta para vivir la ciudad con comodidad, con acceso rápido a universidades, centros de trabajo y vida cultural.",
+    image: teusaquilloRoom1_1Img,
+    gallery: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloRoom2_1Img],
+    amenityImages: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloLaundryImg, teusaquilloRoom1_2Img, teusaquilloStudio1Img],
     amenities: [
-      "Espacios de trabajo",
-      "Cocina compartida",
-      "Terraza",
+      "Espacios de coworking",
+      "Cocina equipada compartida",
       "Internet fibra óptica",
       "Lavandería",
-      "Recolección de agua lluvia",
       "Zonas comunes amplias",
+      "Habitaciones amobladas",
+      "TV en cada habitación",
       "Seguridad 24/7",
     ],
     roomTypes: [
-      { name: "Habitación Individual", priceFrom: "$1.200.000 COP", description: "Espacio privado con escritorio y baño compartido" },
-      { name: "Habitación con Baño Privado", priceFrom: "$1.800.000 COP", description: "Suite privada con baño incluido" },
-      { name: "Habitación Doble", priceFrom: "$900.000 COP", description: "Comparte habitación y reduce costos" },
+      {
+        name: "Habitación Tipo 1",
+        priceFrom: "Desde $980.000 COP",
+        description: "Habitación privada con cama sencilla elevada y baño privado",
+        profile: "Habitación privada amoblada con cama sencilla elevada, escritorio, TV y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
+        minimumStay: "1 mes",
+        images: [teusaquilloRoom1_1Img, teusaquilloRoom1_2Img, teusaquilloRoom1_3Img],
+      },
+      {
+        name: "Habitación Tipo 2",
+        priceFrom: "Desde $1.280.000 COP",
+        description: "Habitación privada con cama semidoble y baño privado",
+        profile: "Habitación privada amoblada con cama semidoble, escritorio, TV y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
+        minimumStay: "1 mes",
+        images: [teusaquilloRoom2_1Img, teusaquilloRoom2_2Img],
+      },
+      {
+        name: "Habitación Tipo 3",
+        priceFrom: "Desde $1.350.000 COP",
+        description: "Habitación privada con cama doble, nevera minibar y baño privado",
+        profile: "Habitación privada amoblada con cama doble, escritorio, TV, nevera minibar y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
+        minimumStay: "1 mes",
+        images: [teusaquilloRoom3_1Img, teusaquilloRoom3_2Img],
+      },
+      {
+        name: "Apartaestudio Tipo 1",
+        priceFrom: "Desde $1.850.000 COP",
+        description: "Apartaestudio completo con cocina equipada y baño privado",
+        profile: "Apartaestudio amoblado con cama doble, escritorio, TV, cocina equipada y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo. Tu espacio completamente independiente.",
+        minimumStay: "1 mes",
+        images: [teusaquilloStudio1Img, teusaquilloStudio2Img, teusaquilloStudio3Img],
+      },
     ],
-    address: "Calle 34 #17-50, Teusaquillo, Bogotá",
-    mapUrl: "https://maps.google.com/?q=4.6286,-74.0728",
+    roomImages: [teusaquilloRoom1_1Img, teusaquilloRoom2_1Img, teusaquilloRoom3_1Img, teusaquilloStudio1Img],
+    address: "Carrera 20 #42A-52, Teusaquillo, Bogotá",
+    mapUrl: "https://maps.app.goo.gl/trM1qJHw2RwMyAu1A",
+    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6!2d-74.0728!3d4.6362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bd00000000%3A0x0!2sCarrera%2020%20%2342A-52!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
     faqs: [
-      { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 1 mes, con descuentos para estadías de 3+ meses." },
-      { question: "¿Están incluidos los servicios?", answer: "Sí, todos los servicios (agua, luz, internet, gas) están incluidos en el precio." },
-      { question: "¿Puedo llevar mascotas?", answer: "Aceptamos mascotas pequeñas (menos de 10kg) con un depósito adicional." },
+      { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 1 mes. Ofrecemos flexibilidad para extender tu estadía." },
+      { question: "¿Están incluidos los servicios?", answer: "Sí, todos los servicios (agua, luz, internet de fibra óptica, gas) están incluidos en el precio." },
+      { question: "¿Las habitaciones tienen baño privado?", answer: "Sí, todas nuestras habitaciones y apartaestudios cuentan con baño privado." },
+      { question: "¿Hay espacios para trabajar?", answer: "Sí, contamos con zonas de coworking compartidas y cada habitación tiene su escritorio con TV." },
     ],
   },
   {
@@ -137,30 +185,45 @@ export const locations: Location[] = [
     neighborhood: "Ferias, Bogotá",
     tagline: "Conectividad, practicidad y vida todo incluido",
     description:
-      "Ubicado en Ferias, a 7 minutos caminando de Titán Plaza. Cerca de la Calle 80 con Boyacá y a 5 minutos caminando de la estación de TransMilenio Ferias. Diseñado para quienes valoran la conectividad, la practicidad y una experiencia de vida todo incluido.",
+      "Ubicado en Ferias, a 7 minutos caminando de Titán Plaza. Cerca de la Calle 80 con Boyacá y a 5 minutos caminando de la estación de TransMilenio Ferias. Diseñado para quienes valoran la conectividad, la practicidad y una experiencia de vida todo incluido. Ideal para profesionales y nómadas digitales que buscan un espacio funcional y bien ubicado.",
     image: candelariaImg,
     gallery: [candelariaImg, candelariaImg, candelariaImg],
+    amenityImages: [candelariaImg, candelariaImg, candelariaImg],
     amenities: [
-      "Espacios de trabajo",
-      "Cocina compartida",
+      "Espacios de coworking",
+      "Cocina equipada comunal",
       "Internet fibra óptica",
       "Terraza",
       "Lavandería",
-      "Recolección de agua lluvia",
+      "Apartaestudios independientes",
       "Zonas comunes",
       "Seguridad 24/7",
     ],
     roomTypes: [
-      { name: "Habitación Estándar", priceFrom: "$1.100.000 COP", description: "Habitación cómoda con buena iluminación natural" },
-      { name: "Habitación con Baño Privado", priceFrom: "$1.600.000 COP", description: "Espacio privado con baño incluido" },
-      { name: "Habitación Compartida", priceFrom: "$800.000 COP", description: "La opción más accesible para empezar" },
+      {
+        name: "Apartaestudio Estándar",
+        priceFrom: "Desde $1.100.000 COP",
+        description: "Apartaestudio completo con todas las comodidades",
+        profile: "Apartaestudio privado totalmente equipado, ideal para quienes buscan independencia con el respaldo de una comunidad. Incluye todo lo necesario para vivir cómodamente.",
+        minimumStay: "1 mes",
+      },
+      {
+        name: "Apartaestudio Premium",
+        priceFrom: "Desde $1.300.000 COP",
+        description: "Apartaestudio amplio con mejores acabados",
+        profile: "Apartaestudio premium con mayor espacio y acabados superiores. Perfecto para quienes valoran el confort y la privacidad sin renunciar a la vida en comunidad.",
+        minimumStay: "1 mes",
+      },
     ],
-    address: "Carrera 69 #6-25, Ferias, Bogotá",
-    mapUrl: "https://maps.google.com/?q=4.6264,-74.1330",
+    roomImages: [candelariaImg, candelariaImg],
+    address: "Carrera 69A #78-64, Ferias, Bogotá",
+    mapUrl: "https://maps.app.goo.gl/5sYa49PgxjykrDHZA",
+    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.2!2d-74.1330!3d4.7028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9e0000000000%3A0x0!2sCarrera%2069A%20%2378-64!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
     faqs: [
-      { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente. Nuestro coliving tiene seguridad 24/7." },
-      { question: "¿Hay transporte cercano?", answer: "Estamos a 5 minutos caminando de la estación de TransMilenio Ferias y cerca de la Calle 80 con Boyacá." },
-      { question: "¿Puedo hacer check-in cualquier día?", answer: "Sí, coordinamos check-in flexible según tu llegada." },
+      { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente y excelente conectividad. Nuestro coliving cuenta con seguridad 24/7." },
+      { question: "¿Hay transporte cercano?", answer: "Estamos a 5 minutos caminando de la estación de TransMilenio Ferias y cerca de la Calle 80 con Boyacá, una de las vías principales de Bogotá." },
+      { question: "¿Los apartaestudios son completamente independientes?", answer: "Sí, cada apartaestudio es completamente privado, pero puedes disfrutar de las zonas comunes y la comunidad cuando lo desees." },
+      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes y acceso a todas las amenidades." },
     ],
   },
 ];
@@ -182,3 +245,4 @@ export const testimonials = [
     quote: "Lo que más valoro es la honestidad. Lo que te prometen es lo que encuentras. Sin sorpresas, sin letras pequeñas.",
   },
 ];
+Actualizar Teusaquillo y Ferias

@@ -27,6 +27,8 @@ import teusaquilloStudio3Img from "@/assets/teusaquillo-studio-3.jpg";
 import teusaquilloCoworkImg from "@/assets/teusaquillo-coworking.jpg";
 import teusaquilloKitchenImg from "@/assets/teusaquillo-kitchen.jpg";
 import teusaquilloLaundryImg from "@/assets/teusaquillo-laundry.jpg";
+import teusaquilloStudio4Img from "@/assets/teusaquillo-studio-4.jpeg";
+
 
 export interface RoomType {
   name: string;
@@ -165,7 +167,7 @@ export const locations: Location[] = [
         description: "Apartaestudio completo con cocina equipada y baño privado",
         profile: "Apartaestudio amoblado con cama doble, escritorio, TV, cocina equipada y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo. Tu espacio completamente independiente.",
         minimumStay: "1 mes",
-        images: [teusaquilloStudio1Img, teusaquilloStudio2Img, teusaquilloStudio3Img],
+        images: [teusaquilloStudio1Img, teusaquilloStudio4Img, teusaquilloStudio2Img, teusaquilloStudio3Img],
       },
     ],
     roomImages: [],

@@ -217,7 +217,7 @@ export const locations: Location[] = [
     ],
     roomImages: [candelariaImg, candelariaImg],
     address: "Carrera 69A #78-64, Ferias, Bogotá",
-    mapUrl: "https://maps.app.goo.gl/5sYa49PgxjykrDHZA",
+    mapUrl: "https://maps.app.goo.gl/JLvkW5UvPMZEtyUz6",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.2!2d-74.1330!3d4.7028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9e0000000000%3A0x0!2sCarrera%2069A%20%2378-64!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
     faqs: [
       { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente y excelente conectividad. Nuestro coliving cuenta con seguridad 24/7." },
@@ -230,18 +230,15 @@ export const locations: Location[] = [
 
 export const testimonials = [
   {
-    name: "Camila R.",
-    role: "Diseñadora UX · 8 meses en AYRA",
-    quote: "AYRA cambió mi forma de vivir. Encontré no solo un lugar donde dormir, sino un hogar donde siempre hay alguien con quien contar.",
+    name: "Brayan Cardona",
+    quote: "Muy buen lugar, Tranquilo, acogedor, el sector es súper seguro, cerca a un parque donde pueden caminar y tomar aire fresco!! Recomendado!!",
   },
   {
-    name: "Tomás M.",
-    role: "Desarrollador · Residente AYRA",
-    quote: "Llegué a Bogotá sin conocer a nadie y en AYRA encontré todo resuelto: internet excelente, todo incluido y buena compañía.",
+    name: "Gloria Rodriguez",
+    quote: "Hermoso lugar, me encanta!!!  Todos los espacios están muy bien diseñados, se aprecia la comodidad y la atención a los detalles.",
   },
   {
     name: "Isabella G.",
-    role: "Emprendedora · 1 año en AYRA",
-    quote: "Lo que más valoro es la honestidad. Lo que te prometen es lo que encuentras. Sin sorpresas, sin letras pequeñas.",
+    quote: "Lo que más valoro es la honestidad. Lo que te prometen es lo que encuentras. ",
   },
 ];

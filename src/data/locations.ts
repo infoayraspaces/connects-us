@@ -245,4 +245,3 @@ export const testimonials = [
     quote: "Lo que más valoro es la honestidad. Lo que te prometen es lo que encuentras. Sin sorpresas, sin letras pequeñas.",
   },
 ];
-Actualizar Teusaquillo y Ferias

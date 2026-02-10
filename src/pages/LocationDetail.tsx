@@ -80,7 +80,7 @@ const LocationDetail = () => {
       <section className="py-16 bg-warm">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-heading text-2xl text-foreground mb-8">Amenidades</h2>
-          <div className="grid grid-cols-2 md:grid-cols  -3 lg:grid-cols-5 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols -3 lg:grid-cols-5 gap-4 mb-8">
             {location.amenities.map(amenity => <div key={amenity} className="flex items-center gap-3 bg-background rounded-lg p-4">
                 <Check className="w-5 h-5 text-primary flex-shrink-0" />
                 <span className="text-sm text-foreground">{amenity}</span>
@@ -109,7 +109,7 @@ const LocationDetail = () => {
             <>
               <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + location.amenityImages!.length) % location.amenityImages!.length); }} className="absolute left-4 text-white/70 hover:text-white" aria-label="Anterior">
                 <ChevronLeft className="w-10 h-10" />
-              </buttonZ>
+              </button>
               <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % location.amenityImages!.length); }} className="absolute right-4 text-white/70 hover:text-white" aria-label="Siguiente">
                 <ChevronRight className="w-10 h-10" />
               </button>

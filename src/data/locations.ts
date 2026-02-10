@@ -133,7 +133,6 @@ export const locations: Location[] = [
       "Zonas comunes amplias",
       "Habitaciones amobladas",
       "TV en cada habitación",
-      "Seguridad 24/7",
     ],
     roomTypes: [
       {
@@ -158,7 +157,7 @@ export const locations: Location[] = [
         description: "Habitación privada con cama doble, nevera minibar y baño privado",
         profile: "Habitación privada amoblada con cama doble, escritorio, TV, nevera minibar y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
         minimumStay: "1 mes",
-        images: [teusaquilloRoom3_1Img, teusaquilloRoom3_2Img],
+        images: [teusaquilloRoom3_2Img],
       },
       {
         name: "Apartaestudio Tipo 1",

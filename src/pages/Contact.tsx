@@ -117,9 +117,9 @@ const Contact = () => {
                         <SelectValue placeholder="Selecciona una sede" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="chapinero">AYRA Chapinero</SelectItem>
-                        <SelectItem value="usaquen">AYRA Usaquén</SelectItem>
-                        <SelectItem value="candelaria">AYRA La Candelaria</SelectItem>
+                        <SelectItem value="modelia">La Nevera Living - Modelia</SelectItem>
+                        <SelectItem value="teusaquillo">Eco Living - Teusaquillo</SelectItem>
+                        <SelectItem value="ferias">Eco Living Terraza - Ferias</SelectItem>
                         <SelectItem value="todas">Todas me interesan</SelectItem>
                       </SelectContent>
                     </Select>
@@ -164,7 +164,7 @@ const Contact = () => {
 
                 <div className="space-y-6">
                   <a
-                    href="https://wa.me/573001234567"
+                    href="https://wa.me/573028366373"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-4 group"
@@ -174,7 +174,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-foreground group-hover:text-primary transition-colors">WhatsApp</p>
-                      <p className="text-sm text-muted-foreground">+57 300 123 4567</p>
+                      <p className="text-sm text-muted-foreground">+57 302 836 6373</p>
                     </div>
                   </a>
 
@@ -184,7 +184,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-foreground">Email</p>
-                      <p className="text-sm text-muted-foreground">hola@ayracoliving.co</p>
+                      <p className="text-sm text-muted-foreground">info.ayraspaces@gmail.com</p>
                     </div>
                   </div>
 
@@ -195,7 +195,7 @@ const Contact = () => {
                     <div>
                       <p className="font-semibold text-foreground">Ubicación</p>
                       <p className="text-sm text-muted-foreground">Bogotá, Colombia</p>
-                      <p className="text-sm text-muted-foreground">3 sedes: Chapinero, Usaquén, La Candelaria</p>
+                      <p className="text-sm text-muted-foreground">3 sedes: Modelia, Teusaquillo, Ferias</p>
                     </div>
                   </div>
                 </div>

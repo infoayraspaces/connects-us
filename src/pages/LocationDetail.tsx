@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { locations, RoomType } from "@/data/locations";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import NeighborhoodSection from "@/components/NeighborhoodSection";
 const LocationDetail = () => {
   const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -227,6 +228,8 @@ const LocationDetail = () => {
           </div>
         </div>
       </section>
+    {/* Neighborhood Section */}
+      <NeighborhoodSection locationId={location.id} />
 
       {/* CTA */}
       <section className="py-20 bg-primary">

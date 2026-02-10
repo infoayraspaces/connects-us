@@ -121,9 +121,9 @@ export const locations: Location[] = [
     tagline: "Central, caminable y bien conectado",
     description:
       "Ubicado en Teusaquillo, en una zona central, caminable y bien conectada. Muy cerca de las estaciones de TransMilenio Calle 45 y Universidad Nacional, y a pocos minutos del Parkway y el Centro Comercial Galerías. Perfecta para vivir la ciudad con comodidad, con acceso rápido a universidades, centros de trabajo y vida cultural.",
-    image: teusaquilloRoom1_1Img,
+    image: teusaquilloKitchenImg,
     gallery: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloRoom2_1Img],
-    amenityImages: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloLaundryImg, teusaquilloRoom1_2Img, teusaquilloStudio1Img],
+    amenityImages: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloLaundryImg],
     amenities: [
       "Espacios de coworking",
       "Cocina equipada compartida",
@@ -168,7 +168,7 @@ export const locations: Location[] = [
         images: [teusaquilloStudio1Img, teusaquilloStudio2Img, teusaquilloStudio3Img],
       },
     ],
-    roomImages: [teusaquilloRoom1_1Img, teusaquilloRoom2_1Img, teusaquilloRoom3_1Img, teusaquilloStudio1Img],
+    roomImages: [],
     address: "Carrera 20 #42A-52, Teusaquillo, Bogotá",
     mapUrl: "https://maps.app.goo.gl/trM1qJHw2RwMyAu1A",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6!2d-74.0728!3d4.6362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bd00000000%3A0x0!2sCarrera%2020%20%2342A-52!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",

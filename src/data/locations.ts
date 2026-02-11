@@ -177,10 +177,11 @@ export const locations: Location[] = [
     mapUrl: "https://maps.app.goo.gl/trM1qJHw2RwMyAu1A",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.6!2d-74.0728!3d4.6362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bd00000000%3A0x0!2sCarrera%2020%20%2342A-52!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
     faqs: [
-      { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 1 mes. Ofrecemos flexibilidad para extender tu estadía." },
+      { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 3 meses. Ofrecemos flexibilidad para extender tu estadía." },
       { question: "¿Están incluidos los servicios?", answer: "Sí, todos los servicios (agua, luz, internet de fibra óptica, gas) están incluidos en el precio." },
       { question: "¿Las habitaciones tienen baño privado?", answer: "Sí, todas nuestras habitaciones y apartaestudios cuentan con baño privado." },
       { question: "¿Hay espacios para trabajar?", answer: "Sí, contamos con zonas de coworking compartidas y cada habitación tiene su escritorio con TV." },
+      { question: "¿Realizan aseo en las zonas sociales?", answer: "Sí, realizamos aseo en las zonas sociales cada 8 días. Además, el aseo interno de tu habitación o apartaestudio se realiza cada 15 días y está incluido en el precio." },
     ],
   },
   {

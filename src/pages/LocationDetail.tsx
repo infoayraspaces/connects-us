@@ -188,6 +188,8 @@ const LocationDetail = () => {
           </Dialog>
         </div>
       </section>
+    {/* Neighborhood Section */}
+      <NeighborhoodSection locationId={location.id} />
 
       {/* Map */}
       {location.embedMapUrl && (
@@ -228,8 +230,7 @@ const LocationDetail = () => {
           </div>
         </div>
       </section>
-    {/* Neighborhood Section */}
-      <NeighborhoodSection locationId={location.id} />
+    
 
       {/* CTA */}
       <section className="py-20 bg-primary">

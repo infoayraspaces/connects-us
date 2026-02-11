@@ -32,6 +32,9 @@ import teusaquilloCowork2Img from "@/assets/coworking.jpeg";
 import teusaquilloLockerImg from "@/assets/Locker.jpeg";
 import teusaquilloBathroom8Img from "@/assets/BañoH8.jpeg";
 import teusaquilloBathroom7Img from "@/assets/BañoH7.jpeg";
+import modeliaBathroom1Img from "@/assets/H1_6.jpg";
+import modeliaBathroom3Img from "@/assets/H3_4.jpg";
+import modeliaBathroom8Img from "@/assets/H8_4.jpg";
 
 
 export interface RoomType {
@@ -89,7 +92,7 @@ export const locations: Location[] = [
         description: "La opción más compacta, pero con todo lo necesario para vivir con comodidad y el estándar AYRA.",
         profile: "La opción más compacta, pero con todo lo necesario para vivir con comodidad y el estándar AYRA.",
         minimumStay: "3 meses",
-        images: [modeliaRoom3Img, modeliaRoom2Img],
+        images: [modeliaRoom3Img, modeliaBathroom3Img],
       },
       {
         name: "Habitación Tipo 2",
@@ -97,7 +100,7 @@ export const locations: Location[] = [
         description: "Habitación amplia con baño y balcón privado",
         profile: "Una habitación amplia, equipada con nevera minibar y microondas interno dentro de la habitación.",
         minimumStay: "3 meses",
-        images: [modeliaRoom1Img, modeliaRoom3Img],
+        images: [modeliaRoom1Img, modeliaBathroom1Img],
       },
       {
         name: "Habitación Tipo 3",
@@ -105,7 +108,7 @@ export const locations: Location[] = [
         description: "La habitación más amplia de nuestra sede, con iluminación natural gracias a ventanales con vista exterior.",
         profile: "La habitación más amplia de nuestra sede, con iluminación natural gracias a ventanales con vista exterior.",
         minimumStay: "3 meses",
-        images: [modeliaRoom2Img, modeliaRoom1Img],
+        images: [modeliaRoom2Img, modeliaBathroom8Img],
       },
     ],
     roomImages: [],

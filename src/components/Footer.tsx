@@ -12,11 +12,10 @@ const Footer = () => {
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Coliving con propósito en Bogotá. Comunidad, sostenibilidad y bienestar en cada espacio.
             </p>
-            {/* Redes Sociales */}
+           {/* Redes Sociales */}
 <div className="mt-6">
   <p className="text-sm font-semibold text-primary-foreground mb-3">Síguenos</p>
   <div className="flex items-center gap-3">
-    {/* Instagram */}
     
       href="https://www.instagram.com/ayra.spaces"
       target="_blank"
@@ -27,7 +26,6 @@ const Footer = () => {
       <Instagram className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
     </a>
 
-    {/* Facebook */}
     
       href="https://www.facebook.com/profile.php?id=61587665052443"
       target="_blank"
@@ -38,7 +36,6 @@ const Footer = () => {
       <Facebook className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
     </a>
 
-    {/* Email */}
     
       href="mailto:info@ayracoliving.com"
       className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"

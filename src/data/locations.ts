@@ -108,7 +108,7 @@ export const locations: Location[] = [
     address: "Carrera 81Bis #22-62, Modelia, Bogotá",
     mapUrl: "https://maps.google.com/?q=4.6716,-74.1214",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d993.7!2d-74.12568!3d4.66887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bf33e1c1c1d%3A0x5f1c1c1c1c1c1c1c!2sCarrera%2081Bis%20%2322-62%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
-    virtualTourUrl: "https://vivanova.com.co/tour/La_Nevera/",
+    virtualTourUrl: "https://tour-modelia.ayracoliving.com",
     faqs: [
       { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 3 meses." },
       { question: "¿Hay estacionamiento?", answer: "No tenemos estacionamiento para autos, pero sí un parking de motos y bicicletas." },

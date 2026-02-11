@@ -28,6 +28,10 @@ import teusaquilloCoworkImg from "@/assets/teusaquillo-coworking.jpg";
 import teusaquilloKitchenImg from "@/assets/teusaquillo-kitchen.jpg";
 import teusaquilloLaundryImg from "@/assets/teusaquillo-laundry.jpg";
 import teusaquilloStudio4Img from "@/assets/teusaquillo-studio-4.jpeg";
+import teusaquilloCowork2Img from "@/assets/coworking.jpeg";
+import teusaquilloLockerImg from "@/assets/Locker-1.JPEG";
+import teusaquilloBathroom8Img from "@/assets/BañoH8.jpeg";
+import teusaquilloBathroom7Img from "@/assets/BañoH7.jpeg";
 
 
 export interface RoomType {
@@ -124,7 +128,7 @@ export const locations: Location[] = [
       "Ubicado en Teusaquillo, en una zona central, caminable y bien conectada. Muy cerca de las estaciones de TransMilenio Calle 45 y Universidad Nacional, y a pocos minutos del Parkway y el Centro Comercial Galerías. Perfecta para vivir la ciudad con comodidad, con acceso rápido a universidades, centros de trabajo y vida cultural.",
     image: teusaquilloKitchenImg,
     gallery: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloRoom2_1Img],
-    amenityImages: [teusaquilloKitchenImg, teusaquilloCoworkImg, teusaquilloLaundryImg],
+    amenityImages: [teusaquilloKitchenImg, teusaquilloLockerImg, teusaquilloCowork2Img, teusaquilloLaundryImg],
     amenities: [
       "Espacios de coworking",
       "Cocina equipada compartida",
@@ -141,7 +145,7 @@ export const locations: Location[] = [
         description: "Habitación privada con cama sencilla elevada y baño privado",
         profile: "Habitación privada amoblada con cama sencilla elevada, escritorio, TV y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
         minimumStay: "1 mes",
-        images: [teusaquilloRoom1_1Img, teusaquilloRoom1_2Img, teusaquilloRoom1_3Img],
+        images: [teusaquilloRoom1_1Img, teusaquilloRoom1_2Img, teusaquilloRoom1_3Img, teusaquilloBathroom8Img],
       },
       {
         name: "Habitación Tipo 2",
@@ -157,7 +161,7 @@ export const locations: Location[] = [
         description: "Habitación privada con cama doble, nevera minibar y baño privado",
         profile: "Habitación privada amoblada con cama doble, escritorio, TV, nevera minibar y baño privado. Espacio moderno, cómodo y funcional, ideal para descanso y trabajo.",
         minimumStay: "1 mes",
-        images: [teusaquilloRoom3_2Img],
+        images: [teusaquilloRoom3_2Img, teusaquilloBathroom7Img],
       },
       {
         name: "Apartaestudio Tipo 1",

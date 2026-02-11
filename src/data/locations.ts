@@ -117,6 +117,7 @@ export const locations: Location[] = [
       { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 3 meses." },
       { question: "¿Hay estacionamiento?", answer: "No tenemos estacionamiento para autos, pero sí un parking de motos y bicicletas." },
       { question: "¿Qué tan cerca está del aeropuerto?", answer: "Estamos a aproximadamente 15 minutos del Aeropuerto El Dorado." },
+      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes y acceso a todas las amenidades." },
     ],
   },
   {
@@ -225,6 +226,7 @@ export const locations: Location[] = [
     mapUrl: "https://maps.app.goo.gl/JLvkW5UvPMZEtyUz6",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6034.957322043858!2d-74.08709316045662!3d4.686423692483906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b18b1ec1b91%3A0x5dbbc946acd63f2e!2zQ3JhLiA2OWEgIyA3OC02NCwgRW5nYXRpdsOhLCBCb2dvdMOhLCBELkMuLCBCb2dvdMOhLCBCb2dvdMOhLCBELkMu!5e0!3m2!1ses-419!2sco!4v1770813225174!5m2!1ses-419!2sco",
     faqs: [
+      { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 3 meses. Ofrecemos flexibilidad para extender tu estadía." },
       { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente y excelente conectividad. Nuestro coliving cuenta con seguridad 24/7." },
       { question: "¿Hay transporte cercano?", answer: "Estamos a 5 minutos caminando de la estación de TransMilenio Ferias y cerca de la Calle 80 con Boyacá, una de las vías principales de Bogotá." },
       { question: "¿Los apartaestudios son completamente independientes?", answer: "Sí, cada apartaestudio es completamente privado, pero puedes disfrutar de las zonas comunes y la comunidad cuando lo desees." },

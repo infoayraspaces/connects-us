@@ -47,9 +47,9 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "Modelia", to: "/ubicaciones/chapinero" },
-                { label: "Teusaquillo", to: "/ubicaciones/usaquen" },
-                { label: "La Candelaria", to: "/ubicaciones/candelaria" },
+               { label: "Modelia", to: "/ubicaciones/modelia" },
+               { label: "Teusaquillo", to: "/ubicaciones/teusaquillo" },   
+               { label: "Ferias", to: "/ubicaciones/ferias" },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">

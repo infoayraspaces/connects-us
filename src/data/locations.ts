@@ -29,7 +29,7 @@ import teusaquilloKitchenImg from "@/assets/teusaquillo-kitchen.jpg";
 import teusaquilloLaundryImg from "@/assets/teusaquillo-laundry.jpg";
 import teusaquilloStudio4Img from "@/assets/teusaquillo-studio-4.jpeg";
 import teusaquilloCowork2Img from "@/assets/coworking.jpeg";
-import teusaquilloLockerImg from "@/assets/Locker-1.JPEG";
+import teusaquilloLockerImg from "@/assets/Locker.jpeg";
 import teusaquilloBathroom8Img from "@/assets/BañoH8.jpeg";
 import teusaquilloBathroom7Img from "@/assets/BañoH7.jpeg";
 

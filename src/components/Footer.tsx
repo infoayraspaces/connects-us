@@ -47,9 +47,9 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "AYRA Chapinero", to: "/ubicaciones/chapinero" },
-                { label: "AYRA Usaquén", to: "/ubicaciones/usaquen" },
-                { label: "AYRA La Candelaria", to: "/ubicaciones/candelaria" },
+                { label: "Modelia", to: "/ubicaciones/chapinero" },
+                { label: "Teusaquillo", to: "/ubicaciones/usaquen" },
+                { label: "La Candelaria", to: "/ubicaciones/candelaria" },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
@@ -66,8 +66,8 @@ const Footer = () => {
               Contacto
             </h4>
             <ul className="space-y-3 text-sm text-primary-foreground/80">
-              <li>hola@ayracoliving.co</li>
-              <li>+57 300 123 4567</li>
+              <li>info@ayracoliving.com</li>
+              <li>+57 302 836 6373</li>
               <li>Bogotá, Colombia</li>
             </ul>
           </div>

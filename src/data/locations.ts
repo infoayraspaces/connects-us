@@ -218,7 +218,7 @@ export const locations: Location[] = [
     roomImages: [candelariaImg, candelariaImg],
     address: "Carrera 69A #78-64, Ferias, Bogotá",
     mapUrl: "https://maps.app.goo.gl/JLvkW5UvPMZEtyUz6",
-    embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.2!2d-74.1330!3d4.7028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9e0000000000%3A0x0!2sCarrera%2069A%20%2378-64!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco",
+    embedMapUrl: "<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6034.957322043858!2d-74.08709316045662!3d4.686423692483906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9b18b1ec1b91%3A0x5dbbc946acd63f2e!2zQ3JhLiA2OWEgIyA3OC02NCwgRW5nYXRpdsOhLCBCb2dvdMOhLCBELkMuLCBCb2dvdMOhLCBCb2dvdMOhLCBELkMu!5e0!3m2!1ses-419!2sco!4v1770813225174!5m2!1ses-419!2sco",
     faqs: [
       { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente y excelente conectividad. Nuestro coliving cuenta con seguridad 24/7." },
       { question: "¿Hay transporte cercano?", answer: "Estamos a 5 minutos caminando de la estación de TransMilenio Ferias y cerca de la Calle 80 con Boyacá, una de las vías principales de Bogotá." },

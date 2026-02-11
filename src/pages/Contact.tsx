@@ -23,11 +23,28 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("¡Mensaje enviado! Te contactaremos pronto.");
-    setFormData({ name: "", email: "", phone: "", location: "", message: "" });
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch("https://formspree.io/f/xzdadkpy", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      toast.success("¡Mensaje enviado! Te contactaremos pronto.");
+      setFormData({ name: "", email: "", phone: "", location: "", message: "" });
+    } else {
+      toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
+    }
+  } catch (error) {
+    toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
+  }
+};
 
   return (
     <Layout>

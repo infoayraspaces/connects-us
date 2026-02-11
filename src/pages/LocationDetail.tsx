@@ -31,7 +31,7 @@ const LocationDetail = () => {
   return <Layout>
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px]">
-        <img src={location.image} alt={location.name} className="w-full h-full object-cover" loading="eager" />
+        <img src={location.image} alt={location.name} className="w-full h-full object-cover object-center scale-75" loading="eager" />
         <div className="absolute inset-0 bg-foreground/40" />
         <div className="absolute inset-0 flex items-end">
           <div className="container mx-auto px-4 lg:px-8 pb-12">
@@ -92,7 +92,7 @@ const LocationDetail = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {location.amenityImages.map((img, i) => (
                 <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }} className="rounded-xl overflow-hidden aspect-[4/3] cursor-pointer" onClick={() => setLightboxIndex(i)}>
-                  <img src={img} alt={`${location.name} - amenidad ${i + 1}`} className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <img src={img} alt={`${location.name} - amenidad ${i + 1}`} className="w-full h-64 object-cover object-center scale-75 hover:scale-105 transition-transform duration-300" loading="lazy" />
                 </motion.div>
               ))}
             </div>
@@ -140,7 +140,7 @@ const LocationDetail = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
               {location.roomImages.map((img, i) => (
                 <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className="rounded-xl overflow-hidden aspect-[4/3]">
-                  <img src={img} alt={`${location.name} - habitación ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={img} alt={`${location.name} - habitación ${i + 1}`} className="w-full h-full object-cover object-center scale-75" loading="lazy" />
                 </motion.div>
               ))}
             </div>
@@ -155,7 +155,7 @@ const LocationDetail = () => {
               </DialogHeader>
               {selectedRoom?.images && selectedRoom.images.length > 0 && (
                 <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
-                  <img src={selectedRoom.images[galleryIndex]} alt={`${selectedRoom.name} - foto ${galleryIndex + 1}`} className="w-full h-full object-cover" />
+                  <img src={selectedRoom.images[galleryIndex]} alt={`${selectedRoom.name} - foto ${galleryIndex + 1}`} className="w-full h-full object-cover object-center scale-75" />
                   {selectedRoom.images.length > 1 && (
                     <>
                       <button onClick={() => setGalleryIndex((galleryIndex - 1 + selectedRoom.images!.length) % selectedRoom.images!.length)} className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/70 rounded-full p-1 hover:bg-background transition-colors" aria-label="Anterior">

@@ -68,14 +68,14 @@ export const locations: Location[] = [
       "Ubicado en Modelia, a solo 3 minutos caminando del Centro Comercial Hayuelos y a 15 minutos del aeropuerto. Cerca de la Avenida El Dorado y las estaciones de TransMilenio Modelia y Normandía. Ideal para quienes llegan a Bogotá y buscan comodidad, seguridad y una ubicación estratégica con todo incluido.",
     image: modeliaPatioImg,
     gallery: [modeliaKitchen1Img, modeliaMezzanineImg, modeliaKitchen2Img],
-    amenityImages: [modeliaKitchen1Img, modeliaMezzanineImg, modeliaKitchen2Img, modeliaCoworkImg, modeliaPatioWorkImg, modeliaPatioExteriorImg],
+    amenityImages: [modeliaCoworkImg, modeliaMezzanineImg, modeliaKitchen2Img, modeliaKitchen1Img, modeliaPatioWorkImg, modeliaPatioExteriorImg],
     amenities: [
       "Zona de trabajo silenciosa",
       "Cocina equipada compartida",
       "Internet fibra óptica",
       "Lavandería",
       "Parking bicicletas",
-      "Recolección de agua lluvia",
+      "Parking para motos",
       "Zonas comunes",
     ],
     roomTypes: [

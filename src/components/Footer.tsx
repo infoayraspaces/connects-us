@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Leaf, Heart, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -12,7 +12,13 @@ const Footer = () => {
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Coliving con propósito en Bogotá. Comunidad, sostenibilidad y bienestar en cada espacio.
             </p>
-            
+            <div className="flex items-center gap-4 mt-6">
+              <Leaf className="w-5 h-5 text-primary-foreground/60" />
+              <Heart className="w-5 h-5 text-primary-foreground/60" />
+              <MapPin className="w-5 h-5 text-primary-foreground/60" />
+            </div>
+          </div>
+
           {/* Links */}
           <div>
             <h4 className="font-body font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/60">
@@ -41,9 +47,9 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "Modelia", to: "/ubicaciones/modelia" },
-                { label: "Teusaquillo", to: "/ubicaciones/teusaquillo" },   
-                { label: "Ferias", to: "/ubicaciones/ferias" },
+               { label: "Modelia", to: "/ubicaciones/modelia" },
+               { label: "Teusaquillo", to: "/ubicaciones/teusaquillo" },   
+               { label: "Ferias", to: "/ubicaciones/ferias" },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">

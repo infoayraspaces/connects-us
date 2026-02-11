@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Leaf, Heart, MapPin } from "lucide-react";
+import {  Instagram, Facebook, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -12,12 +12,17 @@ const Footer = () => {
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Coliving con propósito en Bogotá. Comunidad, sostenibilidad y bienestar en cada espacio.
             </p>
-            <div className="flex items-center gap-4 mt-6">
-              <Leaf className="w-5 h-5 text-primary-foreground/60" />
-              <Heart className="w-5 h-5 text-primary-foreground/60" />
-              <MapPin className="w-5 h-5 text-primary-foreground/60" />
-            </div>
-          </div>
+            <div className="mt-6">
+  <p className="text-sm font-semibold text-primary-foreground mb-3">Síguenos</p>
+  <div className="flex items-center gap-3">
+    <a href="https://www.instagram.com/ayra.spaces" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group" aria-label="Instagram">
+      <Instagram className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+    <a href="https://www.facebook.com/profile.php?id=61587665052443" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group" aria-label="Facebook">
+      <Facebook className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+    <a href="mailto:info@ayracoliving.com" className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group" aria-label="Email">
+      <Mail className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+  </div>
+</div>
 
           {/* Links */}
           <div>

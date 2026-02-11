@@ -117,7 +117,7 @@ export const locations: Location[] = [
       { question: "¿Cuál es la estadía mínima?", answer: "La estadía mínima es de 3 meses." },
       { question: "¿Hay estacionamiento?", answer: "No tenemos estacionamiento para autos, pero sí un parking de motos y bicicletas." },
       { question: "¿Qué tan cerca está del aeropuerto?", answer: "Estamos a aproximadamente 15 minutos del Aeropuerto El Dorado." },
-      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes y acceso a todas las amenidades." },
+      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes, de tu habitación y acceso a todas las amenidades." },
     ],
   },
   {
@@ -230,7 +230,7 @@ export const locations: Location[] = [
       { question: "¿Es seguro el barrio?", answer: "Ferias es un barrio residencial con buen ambiente y excelente conectividad. Nuestro coliving cuenta con seguridad 24/7." },
       { question: "¿Hay transporte cercano?", answer: "Estamos a 5 minutos caminando de la estación de TransMilenio Ferias y cerca de la Calle 80 con Boyacá, una de las vías principales de Bogotá." },
       { question: "¿Los apartaestudios son completamente independientes?", answer: "Sí, cada apartaestudio es completamente privado, pero puedes disfrutar de las zonas comunes y la comunidad cuando lo desees." },
-      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes y acceso a todas las amenidades." },
+      { question: "¿Qué incluye el precio?", answer: "Todo está incluido: servicios públicos (agua, luz, gas, internet de alta velocidad), limpieza de áreas comunes, de tu apartaestudios y acceso a todas las amenidades." },
     ],
   },
 ];

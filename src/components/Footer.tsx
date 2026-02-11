@@ -12,39 +12,41 @@ const Footer = () => {
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Coliving con propósito en Bogotá. Comunidad, sostenibilidad y bienestar en cada espacio.
             </p>
-           {/* Redes Sociales */}
-<div className="mt-6">
-  <p className="text-sm font-semibold text-primary-foreground mb-3">Síguenos</p>
-  <div className="flex items-center gap-3">
-    
-      href="https://www.instagram.com/ayra.spaces"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
-      aria-label="Instagram"
-    >
-      <Instagram className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
-    </a>
+            
+            {/* Redes Sociales */}
+            <div className="mt-6">
+              <p className="text-sm font-semibold text-primary-foreground mb-3">Síguenos</p>
+              <div className="flex items-center gap-3">
+                
+                  href="https://www.instagram.com/ayra.spaces"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+                </a>
 
-    
-      href="https://www.facebook.com/profile.php?id=61587665052443"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
-      aria-label="Facebook"
-    >
-      <Facebook className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
-    </a>
+                
+                  href="https://www.facebook.com/profile.php?id=61587665052443"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+                </a>
 
-    
-      href="mailto:info@ayracoliving.com"
-      className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
-      aria-label="Email"
-    >
-      <Mail className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
-    </a>
-  </div>
-</div>
+                
+                  href="mailto:info@ayracoliving.com"
+                  className="w-11 h-11 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-all group"
+                  aria-label="Email"
+                >
+                  <Mail className="w-5 h-5 text-primary-foreground group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
+            </div>
+          </div>
 
           {/* Links */}
           <div>
@@ -74,9 +76,9 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {[
-               { label: "Modelia", to: "/ubicaciones/modelia" },
-               { label: "Teusaquillo", to: "/ubicaciones/teusaquillo" },   
-               { label: "Ferias", to: "/ubicaciones/ferias" },
+                { label: "Modelia", to: "/ubicaciones/modelia" },
+                { label: "Teusaquillo", to: "/ubicaciones/teusaquillo" },   
+                { label: "Ferias", to: "/ubicaciones/ferias" },
               ].map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">

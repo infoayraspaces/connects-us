@@ -133,7 +133,7 @@ const LocationDetail = () => {
                   <span className="font-semibold text-lg text-accent">{room.priceFrom}</span>
                   <span className="text-sm text-muted-foreground">/ mes</span>
                 </div>
-                <p className="text-xs text-primary mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver detalles →</p>
+                <p className="text-xs text-primary mt-3 opacity-100 transition-opacity">Ver detalles →</p>
               </div>)}
           </div>
           {location.roomImages && location.roomImages.length > 0 && (

@@ -27,13 +27,13 @@ const Contact = () => {
   e.preventDefault();
   
   try {
-    const response = await fetch("https://ayracoliving.com/api/contact.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch("https://formspree.io/f/xzdadkpy", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(formData),
+});
 
     const result = await response.json();
 

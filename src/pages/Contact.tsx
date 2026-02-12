@@ -27,7 +27,11 @@ const Contact = () => {
   e.preventDefault();
   
   try {
-    const response = await fetch("https://formspree.io/f/xzdadkpy", {
+   const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch("https://ayracoliving.com/contact.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +39,9 @@ const Contact = () => {
       body: JSON.stringify(formData),
     });
 
-    if (response.ok) {
+    const result = await response.json();
+
+    if (response.ok && result.success) {
       toast.success("¡Mensaje enviado! Te contactaremos pronto.");
       setFormData({ name: "", email: "", phone: "", location: "", message: "" });
     } else {

@@ -27,7 +27,7 @@ const Contact = () => {
   e.preventDefault();
   
   try {
-    const response = await fetch("https://ayracoliving.com/contact.php", {
+    const response = await fetch("https://ayracoliving.com/api/contact.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

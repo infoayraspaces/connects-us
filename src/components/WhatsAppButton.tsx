@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import whatsappIcon from '/whatsapp-icon.svg';
 
 const WhatsAppButton = () => {
   const whatsappUrl = "https://wa.me/573028366373?text=Hola%2C%20quiero%20saber%20más%20sobre%20AYRA%20Coliving";

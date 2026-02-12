@@ -26,9 +26,6 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  
   try {
     const response = await fetch("https://ayracoliving.com/contact.php", {
       method: "POST",

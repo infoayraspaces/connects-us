@@ -26,8 +26,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   
-  try {
-   const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   
   try {
@@ -51,7 +50,6 @@ const Contact = () => {
     toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
   }
 };
-
   return (
     <Layout>
       <section className="py-20 bg-warm">

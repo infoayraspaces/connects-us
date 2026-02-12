@@ -31,7 +31,7 @@ const TestimonialsSection = () => {
               </p>
               <div>
                 <p className="font-semibold text-foreground">{t.name}</p>
-                <p className="text-sm text-gray-500">{testimonial.location}</p>
+                <p className="text-sm text-gray-500">{t.location}</p>
                 <p className="text-sm text-muted-foreground">{t.role}</p>
               </div>
             </motion.div>

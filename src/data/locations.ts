@@ -241,6 +241,7 @@ export const locations: Location[] = [
 export const testimonials = [
   {
     name: "Brayan Cardona",
+    location: "🇨🇴 Barranquilla",
     quote: "Muy buen lugar, Tranquilo, acogedor, el sector es súper seguro, cerca a un parque donde pueden caminar y tomar aire fresco!! Recomendado!!",
   },
   {

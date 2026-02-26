@@ -7,13 +7,34 @@ const SHEET_ID = "1q1HjMxsxIjHRSRndbegWuNhyUrcJ9BJW8BKe5YqYFqY";
 const SHEET_NAME = "Contratos";
 const COLORS = ["#2d6a4f", "#c0843a", "#52b788", "#e9c46a", "#264653", "#e76f51", "#2a9d8f", "#a8dadc"];
 
-function parseFecha(str: string): Date {
-  if (!str) return new Date(0);
-  if (str.includes("/")) {
-    const [d, m, y] = str.split("/");
-    return new Date(`${y}-${m}-${d}`);
+// Google Sheets puede enviar fechas como número serial, string DD/MM/YYYY o YYYY-MM-DD
+function parseFecha(val: any): Date | null {
+  if (!val) return null;
+  // Número serial de Google Sheets (días desde 30/12/1899)
+  if (typeof val === "number") {
+    const ms = (val - 25569) * 86400 * 1000;
+    return new Date(ms);
   }
-  return new Date(str);
+  const str = String(val).trim();
+  if (!str) return null;
+  // DD/MM/YYYY o D/M/YYYY
+  if (str.includes("/")) {
+    const parts = str.split("/");
+    if (parts.length === 3) {
+      const d = parts[0].padStart(2, "0");
+      const m = parts[1].padStart(2, "0");
+      const y = parts[2];
+      return new Date(`${y}-${m}-${d}T00:00:00`);
+    }
+  }
+  // YYYY-MM-DD
+  return new Date(str + "T00:00:00");
+}
+
+function formatFecha(val: any): string {
+  const d = parseFecha(val);
+  if (!d || isNaN(d.getTime())) return String(val || "");
+  return d.toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
 function LoginPage({ onLogin }: { onLogin: () => void }) {
@@ -72,6 +93,7 @@ function StatCard({ title, value, subtitle, icon: Icon, color }: any) {
 function VencimientoRow({ contrato }: { contrato: any }) {
   const today = new Date();
   const fechaFin = parseFecha(contrato.fecha_fin);
+  if (!fechaFin) return null;
   const diffDays = Math.ceil((fechaFin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
   let color = "bg-green-100 text-green-700";
   let icon = <CheckCircle className="w-4 h-4" />;
@@ -83,7 +105,7 @@ function VencimientoRow({ contrato }: { contrato: any }) {
     <div className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
       <div>
         <p className="text-sm font-medium text-gray-800">{contrato.nombre}</p>
-        <p className="text-xs text-gray-400">Hab. {contrato.habitacion} · {contrato.proyecto}</p>
+        <p className="text-xs text-gray-400">Hab. {contrato.habitacion} · {contrato.proyecto} · Vence: {formatFecha(contrato.fecha_fin)}</p>
       </div>
       <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${color}`}>
         {icon}{label}
@@ -99,6 +121,7 @@ export default function Dashboard() {
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const [filtroProyecto, setFiltroProyecto] = useState("Todos");
   const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [filtroAnio, setFiltroAnio] = useState("Todos");
 
   useEffect(() => { if (localStorage.getItem("ayra_dashboard_auth") === "true") setAuthed(true); }, []);
   useEffect(() => { if (authed) fetchData(); }, [authed]);
@@ -128,44 +151,57 @@ export default function Dashboard() {
   const today = new Date();
   const proyectos = ["Todos", ...Array.from(new Set(data.map(d => d.proyecto).filter(Boolean)))];
 
-  // Datos filtrados para tabla y alertas
+  // Años disponibles para filtro de estancia
+  const anios = ["Todos", ...Array.from(new Set(data.map(d => {
+    const f = parseFecha(d.fecha_inicio);
+    return f ? String(f.getFullYear()) : null;
+  }).filter(Boolean))).sort()];
+
+  // Datos filtrados para tabla, KPIs y alertas
   const datosFiltrados = data.filter(d => {
     const matchProyecto = filtroProyecto === "Todos" || d.proyecto === filtroProyecto;
-    const fin = parseFecha(d.fecha_fin);
-    const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    const esActivo = diff >= 0;
-    const matchEstado = filtroEstado === "Todos" || (filtroEstado === "Activo" && esActivo) || (filtroEstado === "Vencido" && !esActivo);
+    const estadoReal = String(d.estado || "").trim();
+    const matchEstado = filtroEstado === "Todos" || estadoReal === filtroEstado;
     return matchProyecto && matchEstado;
+  });
+
+  // Datos para estancia con filtro de año
+  const datosEstancia = datosFiltrados.filter(d => {
+    if (filtroAnio === "Todos") return true;
+    const f = parseFecha(d.fecha_inicio);
+    return f ? String(f.getFullYear()) === filtroAnio : false;
   });
 
   // Datos para gráficas (solo filtro por proyecto)
   const datosGraficas = filtroProyecto === "Todos" ? data : data.filter(d => d.proyecto === filtroProyecto);
 
-  // KPIs sobre datos filtrados
+  // KPIs
   const totalContratos = datosFiltrados.length;
-  const activos = datosFiltrados.filter(d => {
-    const fin = parseFecha(d.fecha_fin);
-    return Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) >= 0;
-  }).length;
+  const activos = datosFiltrados.filter(d => String(d.estado || "").trim() === "Activo").length;
   const valorPromedio = datosFiltrados.length > 0 ? Math.round(datosFiltrados.reduce((s, d) => s + (Number(d.valor) || 0), 0) / datosFiltrados.length) : 0;
   const ingresoPromedio = datosFiltrados.length > 0 ? Math.round(datosFiltrados.reduce((s, d) => s + (Number(d.ingreso_mensual) || 0), 0) / datosFiltrados.length) : 0;
 
-  // Estancia promedio en días
-  const estancias = datosFiltrados.filter(d => d.fecha_inicio && d.fecha_fin).map(d => {
+  // Estancia promedio
+  const estancias = datosEstancia.filter(d => d.fecha_inicio && d.fecha_fin).map(d => {
     const inicio = parseFecha(d.fecha_inicio);
     const fin = parseFecha(d.fecha_fin);
+    if (!inicio || !fin || isNaN(inicio.getTime()) || isNaN(fin.getTime())) return null;
     return Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24));
-  });
+  }).filter((v): v is number => v !== null && v > 0);
   const estanciaPromedio = estancias.length > 0 ? Math.round(estancias.reduce((a, b) => a + b, 0) / estancias.length) : 0;
-  const estanciaMeses = (estanciaPromedio / 30).toFixed(1);
+  const estanciaMeses = estanciaPromedio > 0 ? (estanciaPromedio / 30).toFixed(1) : "—";
 
-  // Próximos a vencer (60 días) sobre datos filtrados
+  // Próximos a vencer (60 días)
   const proximos = datosFiltrados.filter(d => {
-    if (!d.fecha_fin) return false;
     const fin = parseFecha(d.fecha_fin);
+    if (!fin || isNaN(fin.getTime())) return false;
     const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return diff <= 60;
-  }).sort((a, b) => parseFecha(a.fecha_fin).getTime() - parseFecha(b.fecha_fin).getTime());
+  }).sort((a, b) => {
+    const fa = parseFecha(a.fecha_fin);
+    const fb = parseFecha(b.fecha_fin);
+    return (fa?.getTime() || 0) - (fb?.getTime() || 0);
+  });
 
   // Gráficas
   const byCanal = Object.entries(datosGraficas.reduce((acc: any, d) => { acc[d.canal_adquisicion || "Sin dato"] = (acc[d.canal_adquisicion || "Sin dato"] || 0) + 1; return acc; }, {})).map(([name, value]) => ({ name, value }));
@@ -219,8 +255,14 @@ export default function Dashboard() {
               <option value="Vencido">Vencidos</option>
             </select>
           </div>
-          {(filtroProyecto !== "Todos" || filtroEstado !== "Todos") && (
-            <button onClick={() => { setFiltroProyecto("Todos"); setFiltroEstado("Todos"); }} className="text-xs text-[#2d6a4f] hover:underline">Limpiar filtros</button>
+          <div className="flex items-center gap-2">
+            <label className="text-sm text-gray-500">Año estancia:</label>
+            <select value={filtroAnio} onChange={e => setFiltroAnio(e.target.value)} className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]">
+              {anios.map(a => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </div>
+          {(filtroProyecto !== "Todos" || filtroEstado !== "Todos" || filtroAnio !== "Todos") && (
+            <button onClick={() => { setFiltroProyecto("Todos"); setFiltroEstado("Todos"); setFiltroAnio("Todos"); }} className="text-xs text-[#2d6a4f] hover:underline">Limpiar filtros</button>
           )}
         </div>
 
@@ -230,7 +272,7 @@ export default function Dashboard() {
           <StatCard title="Activos" value={activos} subtitle={`${totalContratos - activos} vencidos`} icon={CheckCircle} color="bg-[#52b788]" />
           <StatCard title="Canon Promedio" value={`$${valorPromedio.toLocaleString("es-CO")}`} subtitle="Por contrato" icon={DollarSign} color="bg-[#c0843a]" />
           <StatCard title="Ingreso Arrendatario" value={`$${ingresoPromedio.toLocaleString("es-CO")}`} subtitle="Promedio mensual" icon={TrendingUp} color="bg-[#264653]" />
-          <StatCard title="Estancia Promedio" value={`${estanciaMeses} meses`} subtitle={`${estanciaPromedio} días`} icon={Clock} color="bg-[#2a9d8f]" />
+          <StatCard title="Estancia Promedio" value={`${estanciaMeses} meses`} subtitle={`${estanciaPromedio > 0 ? estanciaPromedio + " días" : "Sin datos"}`} icon={Clock} color="bg-[#2a9d8f]" />
         </div>
 
         {/* Alertas vencimiento */}
@@ -256,7 +298,7 @@ export default function Dashboard() {
               <BarChart data={byCanal} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis type="number" tick={{ fontSize: 11 }} />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={130} />
+                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={150} />
                 <Tooltip />
                 <Bar dataKey="value" fill="#2d6a4f" radius={[0, 4, 4, 0]} name="Contratos" />
               </BarChart>
@@ -283,7 +325,7 @@ export default function Dashboard() {
               <BarChart data={byOcupacion} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis type="number" tick={{ fontSize: 11 }} />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={150} />
+                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={160} />
                 <Tooltip />
                 <Bar dataKey="value" fill="#c0843a" radius={[0, 4, 4, 0]} name="Arrendatarios" />
               </BarChart>
@@ -303,7 +345,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Tabla de contratos */}
+        {/* Tabla */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-gray-800">Contratos</h2>
@@ -324,11 +366,12 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {datosFiltrados.map((c, i) => {
+                  const estado = String(c.estado || "").trim();
                   const fin = parseFecha(c.fecha_fin);
-                  const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                  const diff = fin ? Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) : 99;
                   let estadoColor = "bg-green-100 text-green-700";
-                  let estadoLabel = "Activo";
-                  if (diff < 0) { estadoColor = "bg-red-100 text-red-700"; estadoLabel = "Vencido"; }
+                  let estadoLabel = estado || "Activo";
+                  if (estado === "Vencido") { estadoColor = "bg-red-100 text-red-700"; }
                   else if (diff <= 30) { estadoColor = "bg-yellow-100 text-yellow-700"; estadoLabel = "Por vencer"; }
                   return (
                     <tr key={i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
@@ -336,8 +379,8 @@ export default function Dashboard() {
                       <td className="py-3 px-3 text-gray-500">{c.proyecto}</td>
                       <td className="py-3 px-3 text-gray-500">{c.habitacion}</td>
                       <td className="py-3 px-3 text-gray-700">${Number(c.valor || 0).toLocaleString("es-CO")}</td>
-                      <td className="py-3 px-3 text-gray-500">{c.fecha_inicio}</td>
-                      <td className="py-3 px-3 text-gray-500">{c.fecha_fin}</td>
+                      <td className="py-3 px-3 text-gray-500">{formatFecha(c.fecha_inicio)}</td>
+                      <td className="py-3 px-3 text-gray-500">{formatFecha(c.fecha_fin)}</td>
                       <td className="py-3 px-3"><span className={`px-2 py-1 rounded-full text-xs font-medium ${estadoColor}`}>{estadoLabel}</span></td>
                     </tr>
                   );

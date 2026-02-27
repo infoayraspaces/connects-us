@@ -173,8 +173,7 @@ export default function Dashboard() {
   const datosFiltrados = data.filter(d => {
     const matchProyecto = filtroProyecto === "Todos" || d.proyecto === filtroProyecto;
     const estadoReal = String(d.estado || "").trim();
-    const matchEstado = filtroEstado === "Todos" || estadoReal === filtroEstado;
-    return matchProyecto && matchEstado;
+const matchEstado = filtroEstado === "Todos" || estadoReal === filtroEstado || (filtroEstado === "NoVencido" && estadoReal !== "Vencido");    return matchProyecto && matchEstado;
   });
 
   // Datos para estancia con filtro de año
@@ -280,10 +279,11 @@ export default function Dashboard() {
           <div className="flex items-center gap-2">
             <label className="text-sm text-gray-500">Estado:</label>
             <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)} className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]">
-              <option value="Todos">Todos</option>
-              <option value="Activo">Activos</option>
-              <option value="Vencido">Vencidos</option>
-            </select>
+  <option value="NoVencido">Activos y Por vencer</option>
+  <option value="Todos">Todos</option>
+  <option value="Activo">Solo Activos</option>
+  <option value="Vencido">Solo Vencidos</option>
+</select>
           </div>
           <div className="flex items-center gap-2">
             <label className="text-sm text-gray-500">Año estancia:</label>

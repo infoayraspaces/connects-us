@@ -208,10 +208,17 @@ export default function Dashboard() {
     .filter(d => String(d.estado || "").trim() === "Activo")
     .reduce((s, d) => s + (Number(d.valor) || 0), 0);
 
-  // Ocupación
+  // Ocupación — habitaciones totales por proyecto (hardcoded)
+  const HABS_POR_PROYECTO: Record<string, number> = {
+    "Ecoliving TEU": 8,
+    "La Nevera Living": 9,
+    "Koti Coliving": 11,
+  };
   const proyectosUnicos = Array.from(new Set(data.map((d: any) => d.proyecto).filter(Boolean))) as string[];
-  const totalHabs = proyectosUnicos.reduce((s, p) => s + data.filter((d: any) => d.proyecto === p).length, 0);
-  const activosHabs = proyectosUnicos.reduce((s, p) => s + data.filter((d: any) => d.proyecto === p && String(d.estado || "").trim() === "Activo").length, 0);
+  const totalHabs = filtroProyecto === "Todos"
+    ? Object.values(HABS_POR_PROYECTO).reduce((a, b) => a + b, 0)
+    : (HABS_POR_PROYECTO[filtroProyecto] || 0);
+  const activosHabs = datosFiltrados.filter(d => String(d.estado || "").trim() === "Activo").length;
   const pctOcupacion = totalHabs > 0 ? Math.round(activosHabs / totalHabs * 100) : 0;
 
   // Gráficas
@@ -278,7 +285,7 @@ export default function Dashboard() {
         </div>
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
           <StatCard title="Total Contratos" value={totalContratos} subtitle="Filtrados" icon={Users} color="bg-[#2d6a4f]" />
           <StatCard title="Activos" value={activos} subtitle={`${totalContratos - activos} vencidos`} icon={CheckCircle} color="bg-[#52b788]" />
           <StatCard title="Canon Promedio" value={`$${valorPromedio.toLocaleString("es-CO")}`} subtitle="Por contrato" icon={DollarSign} color="bg-[#c0843a]" />

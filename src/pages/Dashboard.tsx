@@ -202,7 +202,6 @@ export default function Dashboard() {
     if (!fin || isNaN(fin.getTime())) return false;
     const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     return diff >= 0 && diff <= 60;
-  })
   }).sort((a, b) => {
     const fa = parseFecha(a.fecha_fin);
     const fb = parseFecha(b.fecha_fin);

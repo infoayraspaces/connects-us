@@ -270,14 +270,28 @@ export default function Dashboard() {
             <button onClick={() => { setFiltroProyecto("Todos"); setFiltroEstado("Todos"); setFiltroAnio("Todos"); }} className="text-xs text-[#2d6a4f] hover:underline">Limpiar filtros</button>
           )}
         </div>
+        // Ingreso mensual total
+const ingresoTotalMensual = datosFiltrados
+  .filter(d => String(d.estado || "").trim() === "Activo")
+  .reduce((s, d) => s + (Number(d.valor) || 0), 0);
+
+// Ocupación por proyecto
+const proyectosUnicos = Array.from(new Set(data.map(d => d.proyecto).filter(Boolean)));
+const ocupacionInfo = proyectosUnicos.map(p => {
+  const total = data.filter(d => d.proyecto === p).length;
+  const actv = data.filter(d => d.proyecto === p && String(d.estado || "").trim() === "Activo").length;
+  return { proyecto: p, activos: actv, total };
+});
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-2 lg:grid-cols-7 gap-4">
           <StatCard title="Total Contratos" value={totalContratos} subtitle="Filtrados" icon={Users} color="bg-[#2d6a4f]" />
           <StatCard title="Activos" value={activos} subtitle={`${totalContratos - activos} vencidos`} icon={CheckCircle} color="bg-[#52b788]" />
           <StatCard title="Canon Promedio" value={`$${valorPromedio.toLocaleString("es-CO")}`} subtitle="Por contrato" icon={DollarSign} color="bg-[#c0843a]" />
           <StatCard title="Ingreso Arrendatario" value={`$${ingresoPromedio.toLocaleString("es-CO")}`} subtitle="Promedio mensual" icon={TrendingUp} color="bg-[#264653]" />
           <StatCard title="Estancia Promedio" value={`${estanciaMeses} meses`} subtitle={`${estanciaPromedio > 0 ? estanciaPromedio + " días" : "Sin datos"}`} icon={Clock} color="bg-[#2a9d8f]" />
+          <StatCard title="Facturación Activa" value={`$${ingresoTotalMensual.toLocaleString("es-CO")}`} subtitle="Canon total activos" icon={DollarSign} color="bg-[#1a3a2a]" />
+          <StatCard title="Ocupación" value={`${ocupacionInfo.reduce((s,p) => s + p.activos, 0)}/${ocupacionInfo.reduce((s,p) => s + p.total, 0)}`} subtitle={`${Math.round(ocupacionInfo.reduce((s,p) => s + p.activos, 0) / Math.max(ocupacionInfo.reduce((s,p) => s + p.total, 0), 1) * 100)}% ocupado`} icon={Home} color="bg-[#e76f51]" />
         </div>
 
         {/* Alertas vencimiento */}

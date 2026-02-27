@@ -132,7 +132,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const [filtroProyecto, setFiltroProyecto] = useState("Todos");
-  const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [filtroEstado, setFiltroEstado] = useState("NoVencido");
   const [filtroAnio, setFiltroAnio] = useState("Todos");
 
   useEffect(() => { if (localStorage.getItem("ayra_dashboard_auth") === "true") setAuthed(true); }, []);

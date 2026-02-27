@@ -9,26 +9,38 @@ const COLORS = ["#2d6a4f", "#c0843a", "#52b788", "#e9c46a", "#264653", "#e76f51"
 
 // Google Sheets puede enviar fechas como número serial, string DD/MM/YYYY o YYYY-MM-DD
 function parseFecha(val: any): Date | null {
-  if (!val) return null;
-  // Número serial de Google Sheets (días desde 30/12/1899)
+  if (!val && val !== 0) return null;
+  // Número serial de Google Sheets
   if (typeof val === "number") {
-    const ms = (val - 25569) * 86400 * 1000;
-    return new Date(ms);
+    return new Date((val - 25569) * 86400 * 1000);
   }
   const str = String(val).trim();
   if (!str) return null;
-  // DD/MM/YYYY o D/M/YYYY
+  // Formato Google Viz API: "Date(2026,7,31)" — mes base 0
+  const idx = str.indexOf("Date(");
+  if (idx !== -1) {
+    const inner = str.substring(idx + 5, str.indexOf(")", idx));
+    const parts = inner.split(",").map(Number);
+    if (parts.length >= 3) {
+      return new Date(parts[0], parts[1], parts[2], 12, 0, 0);
+    }
+  }
+  // DD/MM/YYYY
   if (str.includes("/")) {
     const parts = str.split("/");
     if (parts.length === 3) {
-      const d = parts[0].padStart(2, "0");
-      const m = parts[1].padStart(2, "0");
-      const y = parts[2];
-      return new Date(`${y}-${m}-${d}T00:00:00`);
+      const d = parts[0].padStart(2,"0");
+      const m = parts[1].padStart(2,"0");
+      const y = parts[2].length === 2 ? "20" + parts[2] : parts[2];
+      return new Date(Number(y), Number(m) - 1, Number(d), 12, 0, 0);
     }
   }
   // YYYY-MM-DD
-  return new Date(str + "T00:00:00");
+  if (str.length >= 10 && str[4] === "-") {
+    const p = str.substring(0, 10).split("-");
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]), 12, 0, 0);
+  }
+  return null;
 }
 
 function formatFecha(val: any): string {
@@ -140,8 +152,6 @@ export default function Dashboard() {
         return obj;
       });
       setData(rows.filter((r: any) => r.nombre));
-      console.log("fecha_inicio:", rows.filter((r: any) => r.nombre)[0]?.fecha_inicio);
-console.log("fecha_fin:", rows.filter((r: any) => r.nombre)[0]?.fecha_fin);
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
     } catch (e) { console.error(e); }
     setLoading(false);
@@ -287,8 +297,7 @@ console.log("fecha_fin:", rows.filter((r: any) => r.nombre)[0]?.fecha_fin);
         </div>
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-          <StatCard title="Total Contratos" value={totalContratos} subtitle="Filtrados" icon={Users} color="bg-[#2d6a4f]" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <StatCard title="Activos" value={activos} subtitle={`${totalContratos - activos} vencidos`} icon={CheckCircle} color="bg-[#52b788]" />
           <StatCard title="Canon Promedio" value={`$${valorPromedio.toLocaleString("es-CO")}`} subtitle="Por contrato" icon={DollarSign} color="bg-[#c0843a]" />
           <StatCard title="Ingreso Arrendatario" value={`$${ingresoPromedio.toLocaleString("es-CO")}`} subtitle="Promedio mensual" icon={TrendingUp} color="bg-[#264653]" />

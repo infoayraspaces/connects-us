@@ -140,6 +140,7 @@ export default function Dashboard() {
         return obj;
       });
       setData(rows.filter((r: any) => r.nombre));
+      console.log("Primera fila:", rows[0]);
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
     } catch (e) { console.error(e); }
     setLoading(false);

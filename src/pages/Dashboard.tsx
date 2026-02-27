@@ -10,28 +10,24 @@ const COLORS = ["#2d6a4f", "#c0843a", "#52b788", "#e9c46a", "#264653", "#e76f51"
 // Google Sheets puede enviar fechas como número serial, string DD/MM/YYYY o YYYY-MM-DD
 function parseFecha(val: any): Date | null {
   if (!val) return null;
+  // Número serial de Google Sheets (días desde 30/12/1899)
+  if (typeof val === "number") {
+    const ms = (val - 25569) * 86400 * 1000;
+    return new Date(ms);
+  }
   const str = String(val).trim();
   if (!str) return null;
-  
-  // Formato Google Viz: "Date(2026,7,31)" — mes base 0
-  const matchViz = str.match(/Date\((\d+),(\d+),(\d+)\)/);
-  if (matchViz) {
-    return new Date(Number(matchViz[1]), Number(matchViz[2]), Number(matchViz[3]));
-  }
-  
-  // Número serial de Google Sheets
-  if (typeof val === "number") {
-    return new Date((val - 25569) * 86400 * 1000);
-  }
-  
-  // DD/MM/YYYY
+  // DD/MM/YYYY o D/M/YYYY
   if (str.includes("/")) {
     const parts = str.split("/");
     if (parts.length === 3) {
-      return new Date(`${parts[2]}-${parts[1].padStart(2,"0")}-${parts[0].padStart(2,"0")}T00:00:00`);
+      const d = parts[0].padStart(2, "0");
+      const m = parts[1].padStart(2, "0");
+      const y = parts[2];
+      return new Date(`${y}-${m}-${d}T00:00:00`);
     }
   }
-  
+  // YYYY-MM-DD
   return new Date(str + "T00:00:00");
 }
 
@@ -144,7 +140,6 @@ export default function Dashboard() {
         return obj;
       });
       setData(rows.filter((r: any) => r.nombre));
-      console.log("Primera fila:", rows[0]);
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
     } catch (e) { console.error(e); }
     setLoading(false);
@@ -201,12 +196,23 @@ export default function Dashboard() {
     const fin = parseFecha(d.fecha_fin);
     if (!fin || isNaN(fin.getTime())) return false;
     const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    return diff >= 0 && diff <= 60;
+    return diff <= 60;
   }).sort((a, b) => {
     const fa = parseFecha(a.fecha_fin);
     const fb = parseFecha(b.fecha_fin);
     return (fa?.getTime() || 0) - (fb?.getTime() || 0);
   });
+
+  // Ingreso mensual total activos
+  const ingresoTotalMensual = datosFiltrados
+    .filter(d => String(d.estado || "").trim() === "Activo")
+    .reduce((s, d) => s + (Number(d.valor) || 0), 0);
+
+  // Ocupación
+  const proyectosUnicos = Array.from(new Set(data.map((d: any) => d.proyecto).filter(Boolean))) as string[];
+  const totalHabs = proyectosUnicos.reduce((s, p) => s + data.filter((d: any) => d.proyecto === p).length, 0);
+  const activosHabs = proyectosUnicos.reduce((s, p) => s + data.filter((d: any) => d.proyecto === p && String(d.estado || "").trim() === "Activo").length, 0);
+  const pctOcupacion = totalHabs > 0 ? Math.round(activosHabs / totalHabs * 100) : 0;
 
   // Gráficas
   const byCanal = Object.entries(datosGraficas.reduce((acc: any, d) => { acc[d.canal_adquisicion || "Sin dato"] = (acc[d.canal_adquisicion || "Sin dato"] || 0) + 1; return acc; }, {})).map(([name, value]) => ({ name, value }));
@@ -270,28 +276,16 @@ export default function Dashboard() {
             <button onClick={() => { setFiltroProyecto("Todos"); setFiltroEstado("Todos"); setFiltroAnio("Todos"); }} className="text-xs text-[#2d6a4f] hover:underline">Limpiar filtros</button>
           )}
         </div>
-        // Ingreso mensual total
-const ingresoTotalMensual = datosFiltrados
-  .filter(d => String(d.estado || "").trim() === "Activo")
-  .reduce((s, d) => s + (Number(d.valor) || 0), 0);
-
-// Ocupación por proyecto
-const proyectosUnicos = Array.from(new Set(data.map(d => d.proyecto).filter(Boolean)));
-const ocupacionInfo = proyectosUnicos.map(p => {
-  const total = data.filter(d => d.proyecto === p).length;
-  const actv = data.filter(d => d.proyecto === p && String(d.estado || "").trim() === "Activo").length;
-  return { proyecto: p, activos: actv, total };
-});
 
         {/* KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-2 lg:grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-7 gap-4">
           <StatCard title="Total Contratos" value={totalContratos} subtitle="Filtrados" icon={Users} color="bg-[#2d6a4f]" />
           <StatCard title="Activos" value={activos} subtitle={`${totalContratos - activos} vencidos`} icon={CheckCircle} color="bg-[#52b788]" />
           <StatCard title="Canon Promedio" value={`$${valorPromedio.toLocaleString("es-CO")}`} subtitle="Por contrato" icon={DollarSign} color="bg-[#c0843a]" />
           <StatCard title="Ingreso Arrendatario" value={`$${ingresoPromedio.toLocaleString("es-CO")}`} subtitle="Promedio mensual" icon={TrendingUp} color="bg-[#264653]" />
-          <StatCard title="Estancia Promedio" value={`${estanciaMeses} meses`} subtitle={`${estanciaPromedio > 0 ? estanciaPromedio + " días" : "Sin datos"}`} icon={Clock} color="bg-[#2a9d8f]" />
           <StatCard title="Facturación Activa" value={`$${ingresoTotalMensual.toLocaleString("es-CO")}`} subtitle="Canon total activos" icon={DollarSign} color="bg-[#1a3a2a]" />
-          <StatCard title="Ocupación" value={`${ocupacionInfo.reduce((s,p) => s + p.activos, 0)}/${ocupacionInfo.reduce((s,p) => s + p.total, 0)}`} subtitle={`${Math.round(ocupacionInfo.reduce((s,p) => s + p.activos, 0) / Math.max(ocupacionInfo.reduce((s,p) => s + p.total, 0), 1) * 100)}% ocupado`} icon={Home} color="bg-[#e76f51]" />
+          <StatCard title="Ocupación" value={`${activosHabs}/${totalHabs}`} subtitle={`${pctOcupacion}% ocupado`} icon={Home} color="bg-[#e76f51]" />
+          <StatCard title="Estancia Promedio" value={`${estanciaMeses} meses`} subtitle={`${estanciaPromedio > 0 ? estanciaPromedio + " días" : "Sin datos"}`} icon={Clock} color="bg-[#2a9d8f]" />
         </div>
 
         {/* Alertas vencimiento */}

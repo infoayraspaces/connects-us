@@ -140,6 +140,8 @@ export default function Dashboard() {
         return obj;
       });
       setData(rows.filter((r: any) => r.nombre));
+      console.log("fecha_inicio:", rows.filter((r: any) => r.nombre)[0]?.fecha_inicio);
+console.log("fecha_fin:", rows.filter((r: any) => r.nombre)[0]?.fecha_fin);
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
     } catch (e) { console.error(e); }
     setLoading(false);

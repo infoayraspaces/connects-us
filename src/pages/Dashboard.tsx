@@ -10,24 +10,28 @@ const COLORS = ["#2d6a4f", "#c0843a", "#52b788", "#e9c46a", "#264653", "#e76f51"
 // Google Sheets puede enviar fechas como número serial, string DD/MM/YYYY o YYYY-MM-DD
 function parseFecha(val: any): Date | null {
   if (!val) return null;
-  // Número serial de Google Sheets (días desde 30/12/1899)
-  if (typeof val === "number") {
-    const ms = (val - 25569) * 86400 * 1000;
-    return new Date(ms);
-  }
   const str = String(val).trim();
   if (!str) return null;
-  // DD/MM/YYYY o D/M/YYYY
+  
+  // Formato Google Viz: "Date(2026,7,31)" — mes base 0
+  const matchViz = str.match(/Date\((\d+),(\d+),(\d+)\)/);
+  if (matchViz) {
+    return new Date(Number(matchViz[1]), Number(matchViz[2]), Number(matchViz[3]));
+  }
+  
+  // Número serial de Google Sheets
+  if (typeof val === "number") {
+    return new Date((val - 25569) * 86400 * 1000);
+  }
+  
+  // DD/MM/YYYY
   if (str.includes("/")) {
     const parts = str.split("/");
     if (parts.length === 3) {
-      const d = parts[0].padStart(2, "0");
-      const m = parts[1].padStart(2, "0");
-      const y = parts[2];
-      return new Date(`${y}-${m}-${d}T00:00:00`);
+      return new Date(`${parts[2]}-${parts[1].padStart(2,"0")}-${parts[0].padStart(2,"0")}T00:00:00`);
     }
   }
-  // YYYY-MM-DD
+  
   return new Date(str + "T00:00:00");
 }
 

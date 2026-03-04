@@ -172,7 +172,7 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
       }
     }
     if (utilidad === 0 && ingreso > 0 && egreso > 0) utilidad = ingreso - egreso;
-    return { ingreso, egreso, utilidad, ocupacion };
+    console.log(mes, 'FINAL ocupacion:', ocupacion); return { ingreso, egreso, utilidad, ocupacion };
   } catch(e) { return { ingreso:0, egreso:0, utilidad:0, ocupacion:0 }; }
 }
 

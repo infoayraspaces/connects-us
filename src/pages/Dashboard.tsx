@@ -166,13 +166,13 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
         if (labels[i].includes("% de ocupaci")) {
           for (let j = i+1; j < row.length; j++) {
             const v = Number(String(row[j]).replace(/[^0-9.-]/g,''));
-            if (!isNaN(v) && v > 0) { ocupacion = v; break; }
+            if (!isNaN(v) && v > 0) { ocupacion = v / 10; break; }
           }
         }
       }
     }
     if (utilidad === 0 && ingreso > 0 && egreso > 0) utilidad = ingreso - egreso;
-    console.log(mes, 'FINAL ocupacion:', ocupacion); return { ingreso, egreso, utilidad, ocupacion };
+    return { ingreso, egreso, utilidad, ocupacion };
   } catch(e) { return { ingreso:0, egreso:0, utilidad:0, ocupacion:0 }; }
 }
 

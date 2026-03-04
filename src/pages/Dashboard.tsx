@@ -225,7 +225,7 @@ function InformeNevera() {
               <p className="text-xs text-white/40 uppercase tracking-wide">Utilidad 2025</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">{(ocupPromedio*100).toFixed(1)}%</p>
+              <p className="text-2xl font-bold text-white">{ocupPromedio.toFixed(1)}%</p>
               <p className="text-xs text-white/40 uppercase tracking-wide">Ocupación prom.</p>
             </div>
           </div>
@@ -319,7 +319,7 @@ function InformeNevera() {
                     <td className="py-3 px-3 text-right font-medium" style={{color: d.utilidad > 0 ? '#2d6a4f' : '#e76f51'}}>{d.utilidad !== 0 ? fmtFull(d.utilidad) : '—'}</td>
                     <td className="py-3 px-3 text-right text-gray-500">{d.ingreso > 0 ? margen.toFixed(1)+'%' : '—'}</td>
                     <td className="py-3 px-3 text-center">
-                      {d.ocupacion > 0 ? <span className={`px-2 py-1 rounded-full text-xs font-medium ${ocupColor}`}>{(d.ocupacion*100).toFixed(1)}%</span> : '—'}
+                      {d.ocupacion > 0 ? <span className={`px-2 py-1 rounded-full text-xs font-medium ${ocupColor}`}>{d.ocupacion.toFixed(1)}%</span> : '—'}
                     </td>
                   </tr>
                 );
@@ -330,7 +330,7 @@ function InformeNevera() {
                 <td className="py-3 px-3 text-right text-gray-600">{fmtFull(totalEgreso)}</td>
                 <td className="py-3 px-3 text-right" style={{color:'#2d6a4f'}}>{fmtFull(totalUtilidad)}</td>
                 <td className="py-3 px-3 text-right text-gray-600">{((totalUtilidad/totalIngreso)*100).toFixed(1)}%</td>
-                <td className="py-3 px-3 text-center"><span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">{(ocupPromedio*100).toFixed(1)}%</span></td>
+                <td className="py-3 px-3 text-center"><span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">{ocupPromedio.toFixed(1)}%</span></td>
               </tr>
             </tbody>
           </table>

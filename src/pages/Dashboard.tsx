@@ -166,7 +166,7 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
         if (labels[i].includes("% de ocupaci")) {
           for (let j = i+1; j < row.length; j++) {
             const v = Number(String(row[j]).replace(/[^0-9.-]/g,''));
-            if (!isNaN(v) && v > 0) { ocupacion = v >= 5 ? v/10/10 : v >= 1.5 ? v/100 : v; break; }
+            if (!isNaN(v) && v > 0) { ocupacion = v / 10; break; }
           }
         }
       }
@@ -646,4 +646,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

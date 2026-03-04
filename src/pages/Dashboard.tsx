@@ -166,7 +166,7 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
         if (labels[i].includes("% de ocupaci")) {
           for (let j = i+1; j < row.length; j++) {
             const v = Number(String(row[j]).replace(/[^0-9.-]/g,''));
-            if (!isNaN(v) && v > 0) { ocupacion = v > 10 ? v/100 : v; break; }
+            if (!isNaN(v) && v > 0) { ocupacion = v > 1.5 ? v/100 : v; break; }
           }
         }
       }
@@ -387,7 +387,7 @@ export default function Dashboard() {
   const datosFiltrados = data.filter(d => {
     const matchProyecto = filtroProyecto === "Todos" || d.proyecto === filtroProyecto;
     const estadoReal = String(d.estado || "").trim();
-    const matchEstado = filtroEstado === "Todos" || estadoReal === filtroEstado;
+    const matchEstado = filtroEstado === "Todos" || estadoReal === filtroEstado || (filtroEstado === "NoVencido" && estadoReal !== "Vencido");
     return matchProyecto && matchEstado;
   });
 
@@ -418,7 +418,9 @@ export default function Dashboard() {
   const estanciaMeses = estanciaPromedio > 0 ? (estanciaPromedio / 30).toFixed(1) : "—";
 
   // Próximos a vencer (60 días)
-  const proximos = datosFiltrados.filter(d => {
+  const proximos = data.filter(d => {
+    const matchProy = filtroProyecto === "Todos" || d.proyecto === filtroProyecto;
+    if (!matchProy) return false;
     const fin = parseFecha(d.fecha_fin);
     if (!fin || isNaN(fin.getTime())) return false;
     const diff = Math.ceil((fin.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));

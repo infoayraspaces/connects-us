@@ -166,7 +166,7 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
         if (labels[i].includes("% de ocupaci")) {
           for (let j = i+1; j < row.length; j++) {
             const v = Number(String(row[j]).replace(/[^0-9.-]/g,''));
-            if (!isNaN(v) && v > 0) { ocupacion = v / 10; break; }
+            if (!isNaN(v) && v > 0) { ocupacion = v; break; }
           }
         }
       }
@@ -273,11 +273,11 @@ function InformeNevera() {
         <h3 className="font-semibold text-gray-800 mb-6">Ocupación mensual</h3>
         <div className="flex items-end gap-3 h-32">
           {datos.map((d,i) => {
-            const pct = Math.min(d.ocupacion, 1.1);
-            const color = d.ocupacion >= 1 ? '#2d6a4f' : d.ocupacion >= 0.9 ? '#52b788' : d.ocupacion >= 0.8 ? '#c0843a' : '#e76f51';
+            const pct = Math.min(d.ocupacion / 100, 1.1);
+            const color = d.ocupacion >= 100 ? '#2d6a4f' : d.ocupacion >= 90 ? '#52b788' : d.ocupacion >= 80 ? '#c0843a' : '#e76f51';
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-xs font-medium text-gray-700">{d.ocupacion > 0 ? (d.ocupacion*100).toFixed(0)+'%' : '—'}</span>
+                <span className="text-xs font-medium text-gray-700">{d.ocupacion > 0 ? d.ocupacion.toFixed(1)+'%' : '—'}</span>
                 <div className="w-full rounded-t-md" style={{ height: `${(pct/1.1)*90}%`, background: color }}></div>
                 <span className="text-xs text-gray-400">{NEVERA_MESES_LABELS[i]}</span>
               </div>
@@ -310,7 +310,7 @@ function InformeNevera() {
             <tbody>
               {datos.map((d,i) => {
                 const margen = d.ingreso > 0 ? (d.utilidad/d.ingreso)*100 : 0;
-                const ocupColor = d.ocupacion >= 0.95 ? 'bg-green-100 text-green-700' : d.ocupacion >= 0.8 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
+                const ocupColor = d.ocupacion >= 95 ? 'bg-green-100 text-green-700' : d.ocupacion >= 80 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
                 return (
                   <tr key={i} className="border-b border-gray-50 hover:bg-gray-50">
                     <td className="py-3 px-3 font-medium text-gray-800">{NEVERA_MESES_LABELS[i]} 2025</td>

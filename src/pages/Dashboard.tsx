@@ -166,7 +166,7 @@ async function fetchNeveraMes(mes: string): Promise<{ingreso:number,egreso:numbe
         if (labels[i].includes("% de ocupaci")) {
           for (let j = i+1; j < row.length; j++) {
             const v = Number(String(row[j]).replace(/[^0-9.-]/g,''));
-            if (!isNaN(v) && v > 0) { ocupacion = v > 1.5 ? v/100 : v; break; }
+            if (!isNaN(v) && v > 0) { ocupacion = v > 10 ? v/100 : v; break; }
           }
         }
       }
@@ -346,7 +346,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<string>("");
   const [filtroProyecto, setFiltroProyecto] = useState("Todos");
-  const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [filtroEstado, setFiltroEstado] = useState("NoVencido");
   const [filtroAnio, setFiltroAnio] = useState("Todos");
 
   useEffect(() => { if (localStorage.getItem("ayra_dashboard_auth") === "true") setAuthed(true); }, []);

@@ -67,7 +67,7 @@ const Locations = () => {
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Desde <span className="font-semibold text-foreground">{loc.roomTypes[loc.roomTypes.length - 1].priceFrom}</span> / mes
+                    Desde <span className="font-semibold text-foreground">{loc.roomTypes[0].priceFrom}</span> / mes
                   </p>
                   <Link
                     to={`/ubicaciones/${loc.id}`}

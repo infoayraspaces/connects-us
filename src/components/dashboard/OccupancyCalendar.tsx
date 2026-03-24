@@ -9,7 +9,8 @@ interface Contrato {
   fecha_inicio: unknown;
   fecha_fin: unknown;
   fecha_salida?: unknown;
-  valor: unknown;
+  fecha_salida_real?: unknown;
+  [key: string]: unknown;
 }
 
 interface TooltipData {
@@ -29,21 +30,21 @@ interface Props {
 }
 
 const PROJECT_COLORS: Record<string, string> = {
-  "La Nevera Living": "bg-[#2d6a4f] text-white",
-  "Koti Coliving": "bg-[#264653] text-white",
-  "Ecoliving TEU": "bg-[#2a9d8f] text-white",
+  "La Nevera Living": "bg-[#D85A30] text-white",
+  "Koti Coliving": "bg-[#185FA5] text-white",
+  "Ecoliving TEU": "bg-[#1D9E75] text-white",
 };
 
 const PROJECT_BAR_COLOR: Record<string, string> = {
-  "La Nevera Living": "#2d6a4f",
-  "Koti Coliving": "#264653",
-  "Ecoliving TEU": "#2a9d8f",
+  "La Nevera Living": "#D85A30",
+  "Koti Coliving": "#185FA5",
+  "Ecoliving TEU": "#1D9E75",
 };
 
 const PROJECT_DOT: Record<string, string> = {
-  "La Nevera Living": "bg-[#2d6a4f]",
-  "Koti Coliving": "bg-[#264653]",
-  "Ecoliving TEU": "bg-[#2a9d8f]",
+  "La Nevera Living": "bg-[#D85A30]",
+  "Koti Coliving": "bg-[#185FA5]",
+  "Ecoliving TEU": "bg-[#1D9E75]",
 };
 
 function addMonths(date: Date, n: number): Date {
@@ -85,9 +86,19 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
     .filter(p => !filtroProyecto || filtroProyecto === "Todos" || p === filtroProyecto)
     .sort();
 
-  // Usar fecha_salida como fecha de fin real si tiene valor
-  const fechaFinEfectiva = (c: Contrato): unknown =>
-    c.fecha_salida != null && c.fecha_salida !== "" ? c.fecha_salida : c.fecha_fin;
+  // Debug: log keys del primer contrato de La Nevera Living para detectar nombre exacto de columna
+  const primeraNevera = contratos.find(c => c.proyecto === "La Nevera Living");
+  if (primeraNevera) {
+    console.log("[OccupancyCalendar] Keys del primer contrato La Nevera Living:", Object.keys(primeraNevera));
+    console.log("[OccupancyCalendar] Contrato completo:", primeraNevera);
+  }
+
+  // Usar fecha_salida_real o fecha_salida como fecha de fin efectiva si tiene valor
+  const fechaFinEfectiva = (c: Contrato): unknown => {
+    if (c.fecha_salida_real != null && c.fecha_salida_real !== "") return c.fecha_salida_real;
+    if (c.fecha_salida != null && c.fecha_salida !== "") return c.fecha_salida;
+    return c.fecha_fin;
+  };
 
   const contratoEnDia = (proyecto: string, habitacion: string, day: number): Contrato | null => {
     const fecha = new Date(year, month, day, 12, 0, 0);
@@ -271,9 +282,12 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
                           const leftPct = ((bloque.startDay - 1) / totalDays) * 100;
                           const widthPct =
                             ((bloque.endDay - bloque.startDay + 1) / totalDays) * 100;
-                          const tieneSalidaAnticipada =
-                            bloque.contrato.fecha_salida != null &&
-                            bloque.contrato.fecha_salida !== "";
+                          const salidaAnticipada =
+                            (bloque.contrato.fecha_salida_real != null && bloque.contrato.fecha_salida_real !== "")
+                              ? bloque.contrato.fecha_salida_real
+                              : (bloque.contrato.fecha_salida != null && bloque.contrato.fecha_salida !== "")
+                              ? bloque.contrato.fecha_salida
+                              : undefined;
                           return (
                             <div
                               key={bi}
@@ -282,7 +296,7 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
                                 left: `${leftPct}%`,
                                 width: `${widthPct}%`,
                                 backgroundColor: barColor,
-                                opacity: tieneSalidaAnticipada ? 0.7 : 0.92,
+                                opacity: salidaAnticipada ? 0.75 : 0.92,
                               }}
                               onMouseEnter={e =>
                                 setTooltip({
@@ -290,9 +304,7 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
                                   proyecto,
                                   fechaInicio: bloque.contrato.fecha_inicio,
                                   fechaFin: bloque.contrato.fecha_fin,
-                                  fechaSalida: tieneSalidaAnticipada
-                                    ? bloque.contrato.fecha_salida
-                                    : undefined,
+                                  fechaSalida: salidaAnticipada,
                                   valor: bloque.contrato.valor,
                                   x: e.clientX,
                                   y: e.clientY,

@@ -239,7 +239,7 @@ export default function Dashboard() {
         {filtroProyecto === "Koti Coliving" && <InformeKoti />}
         {filtroProyecto === "La Nevera Living" && <InformeNevera />}
 
-        <OccupancyCalendar contratos={data} />
+        <OccupancyCalendar contratos={data} filtroProyecto={filtroProyecto} />
 
         <ExpirationAlerts proximos={proximos} />
 

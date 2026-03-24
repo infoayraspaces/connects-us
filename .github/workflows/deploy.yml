@@ -33,6 +33,7 @@ jobs:
         run: bun run build
         env:
           NODE_ENV: production
+          VITE_DASHBOARD_HASH: ${{ secrets.VITE_DASHBOARD_HASH }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

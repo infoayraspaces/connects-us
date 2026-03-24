@@ -167,7 +167,7 @@ export function OccupancyCalendar({ contratos }: Props) {
           {/* Filas por proyecto y habitación */}
           {proyectos.map(proyecto => {
             const habs = Array.from(habitacionesPorProyecto[proyecto]).sort((a, b) =>
-              a.localeCompare(b, "es", { numeric: true })
+              String(a).localeCompare(String(b), "es", { numeric: true })
             );
             return (
               <div key={proyecto}>

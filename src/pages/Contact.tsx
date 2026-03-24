@@ -1,6 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Send, Loader2 } from "lucide-react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,39 +16,54 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    location: "",
-    message: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  
-  try {
-    const response = await fetch("https://formspree.io/f/xzdadkpy", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(formData),
+const contactSchema = z.object({
+  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+  email: z.string().email("Ingresa un correo electrónico válido"),
+  phone: z
+    .string()
+    .regex(/^(\+?57)?[3][0-9]{9}$/, "Ingresa un número colombiano válido (ej: 3001234567)")
+    .or(z.literal(""))
+    .optional(),
+  location: z.string().optional(),
+  message: z
+    .string()
+    .max(500, "El mensaje no puede superar 500 caracteres")
+    .optional(),
 });
 
-    const result = await response.json();
+type ContactForm = z.infer<typeof contactSchema>;
 
-    if (response.ok && result.success) {
-      toast.success("¡Mensaje enviado! Te contactaremos pronto.");
-      setFormData({ name: "", email: "", phone: "", location: "", message: "" });
-    } else {
+const Contact = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactForm>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { name: "", email: "", phone: "", location: "", message: "" },
+  });
+
+  const onSubmit = async (data: ContactForm) => {
+    try {
+      const response = await fetch("https://formspree.io/f/xzdadkpy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        toast.success("¡Mensaje enviado! Te contactaremos pronto.");
+        reset();
+      } else {
+        toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
+      }
+    } catch {
       toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
     }
-  } catch (error) {
-    toast.error("Hubo un error. Por favor intenta de nuevo o contáctanos por WhatsApp.");
-  }
-};
+  };
+
   return (
     <Layout>
       <section className="py-20 bg-warm">
@@ -79,7 +96,7 @@ const Contact = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-3"
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
@@ -87,12 +104,14 @@ const Contact = () => {
                     </label>
                     <Input
                       id="name"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      {...register("name")}
                       placeholder="Tu nombre"
                       className="bg-background"
+                      aria-invalid={!!errors.name}
                     />
+                    {errors.name && (
+                      <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
@@ -101,12 +120,14 @@ const Contact = () => {
                     <Input
                       id="email"
                       type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      {...register("email")}
                       placeholder="tu@email.com"
                       className="bg-background"
+                      aria-invalid={!!errors.email}
                     />
+                    {errors.email && (
+                      <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                    )}
                   </div>
                 </div>
 
@@ -117,30 +138,36 @@ const Contact = () => {
                     </label>
                     <Input
                       id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+57 300 123 4567"
+                      {...register("phone")}
+                      placeholder="3001234567"
                       className="bg-background"
+                      aria-invalid={!!errors.phone}
                     />
+                    {errors.phone && (
+                      <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="location" className="block text-sm font-medium text-foreground mb-2">
                       ¿Qué sede te interesa?
                     </label>
-                    <Select
-                      value={formData.location}
-                      onValueChange={(v) => setFormData({ ...formData, location: v })}
-                    >
-                      <SelectTrigger className="bg-background">
-                        <SelectValue placeholder="Selecciona una sede" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="modelia">La Nevera Living - Modelia</SelectItem>
-                        <SelectItem value="teusaquillo">Eco Living - Teusaquillo</SelectItem>
-                        <SelectItem value="ferias">Eco Living Terraza - Ferias</SelectItem>
-                        <SelectItem value="todas">Todas me interesan</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Controller
+                      name="location"
+                      control={control}
+                      render={({ field }) => (
+                        <Select value={field.value} onValueChange={field.onChange}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="Selecciona una sede" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="modelia">La Nevera Living - Modelia</SelectItem>
+                            <SelectItem value="teusaquillo">Eco Living - Teusaquillo</SelectItem>
+                            <SelectItem value="ferias">Eco Living Terraza - Ferias</SelectItem>
+                            <SelectItem value="todas">Todas me interesan</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
                   </div>
                 </div>
 
@@ -150,17 +177,29 @@ const Contact = () => {
                   </label>
                   <Textarea
                     id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    {...register("message")}
                     placeholder="Cuéntanos qué buscas, cuándo te gustaría mudarte, o cualquier pregunta..."
                     rows={4}
                     className="bg-background"
                   />
+                  {errors.message && (
+                    <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>
+                  )}
                 </div>
 
-                <Button variant="hero" size="xl" type="submit" className="w-full md:w-auto">
-                  <Send className="w-5 h-5" />
-                  Enviar solicitud
+                <Button
+                  variant="hero"
+                  size="xl"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full md:w-auto"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                  {isSubmitting ? "Enviando..." : "Enviar solicitud"}
                 </Button>
               </form>
             </motion.div>

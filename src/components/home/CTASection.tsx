@@ -30,7 +30,7 @@ const CTASection = () => {
               asChild
             >
               <a
-                href="https://wa.me/573001234567?text=Hola%2C%20quiero%20saber%20más%20sobre%20AYRA%20Coliving"
+                href="https://wa.me/573028366373?text=Hola%2C%20quiero%20saber%20más%20sobre%20AYRA%20Coliving"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -238,7 +238,14 @@ export const locations: Location[] = [
   },
 ];
 
-export const testimonials = [
+export interface Testimonial {
+  name: string;
+  location?: string;
+  quote: string;
+  role?: string;
+}
+
+export const testimonials: Testimonial[] = [
   {
     name: "Brayan Cardona",
     location: "🇨🇴 Barranquilla",

@@ -151,7 +151,7 @@ export default function Dashboard() {
   const anios = ["Todos", ...Array.from(new Set(data.map((d: any) => {
     const f = parseFecha(d.fecha_inicio);
     return f ? String(f.getFullYear()) : null;
-  }).filter(Boolean))).sort()];
+  }).filter((v): v is string => v !== null))).sort()];
 
   const datosFiltrados = data.filter((d: any) => {
     const matchProyecto = filtroProyecto === "Todos" || d.proyecto === filtroProyecto;

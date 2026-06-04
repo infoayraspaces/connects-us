@@ -168,7 +168,7 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
           <div className="mt-1 text-gray-300">
             {formatFecha(tooltip.fechaInicio)} →{" "}
             {formatFecha(tooltip.fechaSalida ?? tooltip.fechaFin)}
-            {tooltip.fechaSalida && (
+            {!!tooltip.fechaSalida && (
               <span className="ml-1 text-yellow-300">(salida anticipada)</span>
             )}
           </div>

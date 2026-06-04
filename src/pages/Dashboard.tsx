@@ -139,7 +139,7 @@ export default function Dashboard() {
       });
       setData(rows.filter((r: any) => r.nombre));
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
-    } catch (e) { console.error(e); }
+    } catch { /* error silencioso en producción, manejado por el estado de UI */ }
     setLoading(false);
   };
 

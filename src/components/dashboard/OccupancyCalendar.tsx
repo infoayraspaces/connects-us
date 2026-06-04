@@ -86,13 +86,6 @@ export function OccupancyCalendar({ contratos, filtroProyecto }: Props) {
     .filter(p => !filtroProyecto || filtroProyecto === "Todos" || p === filtroProyecto)
     .sort();
 
-  // Debug: log keys del primer contrato de La Nevera Living para detectar nombre exacto de columna
-  const primeraNevera = contratos.find(c => c.proyecto === "La Nevera Living");
-  if (primeraNevera) {
-    console.log("[OccupancyCalendar] Keys del primer contrato La Nevera Living:", Object.keys(primeraNevera));
-    console.log("[OccupancyCalendar] Contrato completo:", primeraNevera);
-  }
-
   // Usar fecha_salida_real o fecha_salida como fecha de fin efectiva si tiene valor
   const fechaFinEfectiva = (c: Contrato): unknown => {
     if (c.fecha_salida_real != null && c.fecha_salida_real !== "") return c.fecha_salida_real;

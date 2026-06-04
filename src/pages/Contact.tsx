@@ -29,6 +29,9 @@ const contactSchema = z.object({
     .string()
     .max(500, "El mensaje no puede superar 500 caracteres")
     .optional(),
+  acceptPrivacy: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar el tratamiento de datos para continuar" }),
+  }),
 });
 
 type ContactForm = z.infer<typeof contactSchema>;
@@ -39,15 +42,20 @@ const Contact = () => {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", phone: "", location: "", message: "" },
+    defaultValues: { name: "", email: "", phone: "", location: "", message: "", acceptPrivacy: false as unknown as true },
   });
 
   const onSubmit = async (data: ContactForm) => {
+    if (!import.meta.env.VITE_FORMSPREE_URL) {
+      toast.error("Formulario no configurado. Contáctanos por WhatsApp.");
+      return;
+    }
     try {
-      const response = await fetch("https://formspree.io/f/xzdadkpy", {
+      const response = await fetch(import.meta.env.VITE_FORMSPREE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -187,11 +195,28 @@ const Contact = () => {
                   )}
                 </div>
 
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="acceptPrivacy"
+                    {...register("acceptPrivacy")}
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                  />
+                  <div>
+                    <label htmlFor="acceptPrivacy" className="text-sm text-foreground cursor-pointer">
+                      Autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012
+                    </label>
+                    {errors.acceptPrivacy && (
+                      <p className="text-red-500 text-xs mt-1">{errors.acceptPrivacy.message}</p>
+                    )}
+                  </div>
+                </div>
+
                 <Button
                   variant="hero"
                   size="xl"
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !watch("acceptPrivacy")}
                   className="w-full md:w-auto"
                 >
                   {isSubmitting ? (

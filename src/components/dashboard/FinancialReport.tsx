@@ -4,11 +4,11 @@ import {
   ResponsiveContainer, Legend,
 } from "recharts";
 
-const NEVERA_SHEET_ID = "1yd5JdYg-3lJneBheZht4O9KwKvgvnTeVOy1-0vhX7kU";
+const NEVERA_SHEET_ID = import.meta.env.VITE_NEVERA_SHEET_ID;
 const NEVERA_MESES = ["ENE 25","FEB 25","MARZO 25","ABRIL 25","MAYO 25","JUNIO 25","JULIO 25","AGOSTO 25","SEPT 25","OCT 25","NOV 25","DIC 25"];
 const NEVERA_LABELS = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-const KOTI_SHEET_ID = "1AkM5C8J05I-jBJZh8vbXwPnhLzzLC5kD9ffPbGplrmI";
+const KOTI_SHEET_ID = import.meta.env.VITE_KOTI_SHEET_ID;
 const KOTI_MESES_2024 = ["ABR24","MAY24","JUN24","JUL24","AGO24","SEP24","OCT24","NOV24","DIC24"];
 const KOTI_LABELS_2024 = ["Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 const KOTI_MESES_2025 = ["ENE25","FEB25","MAR25","ABR25","MAYO2025","JUNIO 2025","JULIO 2025","AGOSTO 2025","SEPTIEMBRE 2025","OCTUBRE 2025","NOVIEMBRE 2025","DICIEMBRE 2025"];

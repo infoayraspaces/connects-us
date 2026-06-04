@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { LogOut, Users, TrendingUp, Home, DollarSign, Clock, RefreshCw, Filter, CheckCircle } from "lucide-react";
-import { verifyCredentials, createSession, isSessionValid, clearSession } from "@/lib/auth";
+import { verifyCredentials, createSession, isSessionValid, clearSession, recordFailedAttempt, isLockedOut, getRemainingLockoutMs, getFailedAttempts, clearAttempts } from "@/lib/auth";
 import { parseFecha } from "@/lib/dateParser";
 import { InformeNevera, InformeKoti } from "@/components/dashboard/FinancialReport";
 import { ExpirationAlerts } from "@/components/dashboard/ExpirationAlerts";
@@ -8,7 +8,7 @@ import { AnalyticsCharts } from "@/components/dashboard/AnalyticsCharts";
 import { ContractsTable } from "@/components/dashboard/ContractsTable";
 import { OccupancyCalendar } from "@/components/dashboard/OccupancyCalendar";
 
-const SHEET_ID = "1q1HjMxsxIjHRSRndbegWuNhyUrcJ9BJW8BKe5YqYFqY";
+const SHEET_ID = import.meta.env.VITE_SHEET_ID;
 const SHEET_NAME = "Contratos";
 
 const HABS_POR_PROYECTO: Record<string, number> = {
@@ -36,12 +36,45 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
+  const [failedAttempts, setFailedAttempts] = useState(() => getFailedAttempts());
+  const [locked, setLocked] = useState(() => isLockedOut());
+  const [remainingMin, setRemainingMin] = useState(() => Math.ceil(getRemainingLockoutMs() / 60000));
+
+  useEffect(() => {
+    if (!locked) return;
+    const id = setInterval(() => {
+      const remaining = getRemainingLockoutMs();
+      if (remaining <= 0) {
+        setLocked(false);
+        setRemainingMin(0);
+      } else {
+        setRemainingMin(Math.ceil(remaining / 60000));
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [locked]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLockedOut()) return;
     const ok = await verifyCredentials(user, pass);
-    if (ok) { createSession(); onLogin(); }
-    else setError("Usuario o contraseña incorrectos");
+    if (ok) {
+      clearAttempts();
+      await createSession();
+      onLogin();
+    } else {
+      recordFailedAttempt();
+      const remaining = getRemainingLockoutMs();
+      if (remaining > 0) {
+        setLocked(true);
+        setRemainingMin(Math.ceil(remaining / 60000));
+      } else {
+        setFailedAttempts(getFailedAttempts());
+      }
+      setError("Usuario o contraseña incorrectos");
+    }
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a3a2a] to-[#2d6a4f] flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
@@ -52,18 +85,28 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
           <h1 className="text-2xl font-bold text-gray-800">AYRA Coliving</h1>
           <p className="text-gray-500 text-sm mt-1">Panel de Control</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
-            <input type="text" value={user} onChange={e => setUser(e.target.value)} className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]" placeholder="Ingresa tu usuario" />
+        {locked ? (
+          <div className="text-center py-4 space-y-2">
+            <p className="text-red-600 font-medium">Demasiados intentos fallidos.</p>
+            <p className="text-gray-500 text-sm">Espera {remainingMin} {remainingMin === 1 ? "minuto" : "minutos"} para intentar de nuevo.</p>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-            <input type="password" value={pass} onChange={e => setPass(e.target.value)} className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]" placeholder="Ingresa tu contraseña" />
-          </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button type="submit" className="w-full bg-[#2d6a4f] text-white py-3 rounded-lg font-medium hover:bg-[#1e4d38] transition-colors">Ingresar</button>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+              <input type="text" value={user} onChange={e => setUser(e.target.value)} className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]" placeholder="Ingresa tu usuario" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+              <input type="password" value={pass} onChange={e => setPass(e.target.value)} className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]" placeholder="Ingresa tu contraseña" />
+            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {failedAttempts >= 2 && (
+              <p className="text-amber-500 text-sm">Te quedan {5 - failedAttempts} {(5 - failedAttempts) === 1 ? "intento" : "intentos"}.</p>
+            )}
+            <button type="submit" disabled={locked} className="w-full bg-[#2d6a4f] text-white py-3 rounded-lg font-medium hover:bg-[#1e4d38] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Ingresar</button>
+          </form>
+        )}
       </div>
     </div>
   );
@@ -78,7 +121,7 @@ export default function Dashboard() {
   const [filtroEstado, setFiltroEstado] = useState("NoVencido");
   const [filtroAnio, setFiltroAnio] = useState("Todos");
 
-  useEffect(() => { if (isSessionValid()) setAuthed(true); }, []);
+  useEffect(() => { isSessionValid().then(valid => { if (valid) setAuthed(true); }); }, []);
   useEffect(() => { if (authed) fetchData(); }, [authed]);
 
   const fetchData = async () => {

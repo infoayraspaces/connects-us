@@ -34,6 +34,9 @@ jobs:
         env:
           NODE_ENV: production
           VITE_DASHBOARD_HASH: ${{ secrets.VITE_DASHBOARD_HASH }}
+          VITE_SHEET_ID: ${{ secrets.VITE_SHEET_ID }}
+          VITE_NEVERA_SHEET_ID: ${{ secrets.VITE_NEVERA_SHEET_ID }}
+          VITE_KOTI_SHEET_ID: ${{ secrets.VITE_KOTI_SHEET_ID }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

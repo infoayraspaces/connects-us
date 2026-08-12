@@ -5,15 +5,24 @@
     <!-- CSP: unsafe-inline es necesario en este SPA estático (Vite + GitHub Pages)
          porque no hay servidor que inyecte nonces en tiempo de petición.
          Los estilos inline los genera Tailwind en runtime y framer-motion inyecta
-         estilos animados directamente en el DOM. -->
+         estilos animados directamente en el DOM.
+
+         Sin frame-ancestors a propósito: los navegadores lo ignoran cuando la CSP
+         viaja en un <meta> y solo ensucia la consola con un aviso. Protegerse de
+         clickjacking exige la cabecera HTTP (Content-Security-Policy o
+         X-Frame-Options), y GitHub Pages no permite configurar cabeceras. Si algún
+         día se migra a Cloudflare Pages o Netlify, añadirla allí. -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
+      base-uri 'self';
+      object-src 'none';
+      form-action 'self' https://formspree.io;
       script-src 'self' 'unsafe-inline';
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src https://fonts.gstatic.com;
-      img-src 'self' data: https:;
+      font-src 'self' data: https://fonts.gstatic.com;
+      img-src 'self' data:;
       connect-src 'self' https://docs.google.com https://formspree.io;
-      frame-src https://www.google.com;
+      frame-src https://www.google.com https://tour-modelia.ayracoliving.com;
     " />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AYRA Coliving Bogotá — Vive en Comunidad</title>

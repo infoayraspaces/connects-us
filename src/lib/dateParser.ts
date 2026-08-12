@@ -3,7 +3,12 @@
 export function parseFecha(val: unknown): Date | null {
   if (!val && val !== 0) return null;
   if (typeof val === "number") {
-    return new Date((val - 25569) * 86400 * 1000);
+    // El serial de Sheets es días desde 1899-12-30. Multiplicarlo da medianoche UTC,
+    // que en Colombia (UTC-5) se renderiza como el día ANTERIOR. Reconstruimos la
+    // fecha al mediodía local, igual que el resto de ramas, para evitar ese off-by-one.
+    const utc = new Date(Math.round((val - 25569) * 86400 * 1000));
+    if (isNaN(utc.getTime())) return null;
+    return new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate(), 12, 0, 0);
   }
   const str = String(val).trim();
   if (!str) return null;

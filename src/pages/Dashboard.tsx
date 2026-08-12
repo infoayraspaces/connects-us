@@ -116,6 +116,11 @@ export default function Dashboard() {
   const [authed, setAuthed] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  // Entre el login y el primer setLoading(true) hay un render con loading=false y
+  // data=[], que hacía parpadear el aviso de "la hoja no devolvió contratos"
+  // antes de haber consultado nada. Ese aviso solo tiene sentido tras una carga real.
+  const [hasFetched, setHasFetched] = useState(false);
   const [lastUpdate, setLastUpdate] = useState("");
   const [filtroProyecto, setFiltroProyecto] = useState("Todos");
   const [filtroEstado, setFiltroEstado] = useState("NoVencido");
@@ -126,9 +131,12 @@ export default function Dashboard() {
 
   const fetchData = async () => {
     setLoading(true);
+    setLoadError("");
     try {
+      if (!SHEET_ID) throw new Error("Falta configurar VITE_SHEET_ID.");
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
       const res = await fetch(url);
+      if (!res.ok) throw new Error(`Google Sheets respondió ${res.status}.`);
       const text = await res.text();
       const json = JSON.parse(text.substring(47).slice(0, -2));
       const cols = json.table.cols.map((c: any) => c.label);
@@ -139,7 +147,16 @@ export default function Dashboard() {
       });
       setData(rows.filter((r: any) => r.nombre));
       setLastUpdate(new Date().toLocaleTimeString("es-CO"));
-    } catch { /* error silencioso en producción, manejado por el estado de UI */ }
+    } catch (e) {
+      // Antes esto era un catch vacío: si el sheet fallaba, el panel quedaba en
+      // blanco sin explicación. Ahora el motivo se muestra en pantalla.
+      setLoadError(
+        e instanceof Error && e.message.startsWith("Falta")
+          ? e.message
+          : "No se pudieron cargar los datos. Revisa que la hoja de cálculo siga accesible y que haya conexión."
+      );
+    }
+    setHasFetched(true);
     setLoading(false);
   };
 
@@ -238,6 +255,21 @@ export default function Dashboard() {
       </div>
 
       <div className="p-6 max-w-7xl mx-auto space-y-6">
+        {loadError && (
+          <div role="alert" className="bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 flex items-start justify-between gap-4">
+            <p className="text-sm">{loadError}</p>
+            <button onClick={fetchData} disabled={loading} className="text-sm font-medium underline shrink-0 disabled:opacity-50">
+              Reintentar
+            </button>
+          </div>
+        )}
+
+        {hasFetched && !loadError && !loading && data.length === 0 && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 rounded-xl p-4 text-sm">
+            La hoja se cargó pero no devolvió contratos. Verifica que la pestaña «{SHEET_NAME}» tenga datos y una columna <code>nombre</code>.
+          </div>
+        )}
+
         {/* Filtros */}
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2 text-gray-500">

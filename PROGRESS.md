@@ -93,8 +93,20 @@ Ver `REVISION-2026-08-12.md` en la raíz del repo para el informe completo.
 
 ## Pendiente
 
-### 🔴 Urgente (fuga de datos)
-- [ ] **Quitar el permiso "cualquiera con el enlace" del Google Sheet.** El endpoint `gviz/tq` solo funciona si la hoja es pública, y `VITE_SHEET_ID` queda escrito en el bundle JS. Hoy los datos de inquilinos son accesibles sin pasar por el login. Rompe el Dashboard, pero cierra la fuga.
+### 🔴 Urgente (Dashboard)
+**Las 3 hojas del Dashboard están restringidas desde el 29/oct/2026 por privacidad (Ley 1581). Por eso el Dashboard del sitio ya no carga datos. Para recuperarlo: leer las hojas con una cuenta de servicio desde un backend privado, nunca volver a abrirlas al público.**
+
+Verificado el 29 oct 2026, después de pasarlas a "Restringido". Se probó con peticiones anónimas de solo lectura, sin sesión de Google, usando los IDs que aparecen en el JS publicado (chunk `Dashboard-*.js`):
+
+| Variable | Uso | Lectura anónima (`export?format=csv` y `gviz/tq`) |
+|---|---|---|
+| `VITE_SHEET_ID` | Contratos | Bloqueada (401) |
+| `VITE_NEVERA_SHEET_ID` | Informe financiero La Nevera | Bloqueada (401) |
+| `VITE_KOTI_SHEET_ID` | Informe financiero Koti | Bloqueada (401) |
+
+Antes de esto, las hojas de La Nevera y Koti se podían leer sin login. Los IDs siguen en el JS publicado: no son secretos, así que la protección depende solo del permiso de cada hoja.
+
+- [x] ~~Quitar "cualquiera con el enlace" de las 3 hojas~~: hecho y verificado el 29 oct 2026.
 - [ ] Rotar la contraseña del Dashboard (asumir comprometida).
 - [ ] Decidir arquitectura real del Dashboard: Cloudflare Access, función serverless, o backend en el VPS. Un SPA estático no puede guardar un secreto.
 

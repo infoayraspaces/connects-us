@@ -83,6 +83,14 @@ Ver `REVISION-2026-08-12.md` en la raíz del repo para el informe completo.
 **Desactivado temporalmente**
 - `locations.ts` — `virtualTourUrl` de Modelia comentado. El VPS (145.223.106.8) responde vacío en todas las rutas; el botón llevaba a una página en blanco. Descomentar cuando el tour vuelva.
 
+### Mejora 7 — Política de tratamiento de datos (28 oct 2026)
+- `public/privacidad/index.html` (nuevo): política estática, vigente desde el 29 oct 2026. Sin scripts ni recursos externos. Ancla `#derechos` para la URL de eliminación de datos que puede pedir Meta (`/privacidad/#derechos`).
+- `Contact.tsx`: el texto del checkbox de autorización enlaza a `/privacidad/`. Validación sin cambios.
+- `Footer.tsx`: enlace "Política de datos" en la columna Explorar.
+- `sitemap.xml`: agrega `https://ayracoliving.com/privacidad/`.
+- Verificado en producción: `/privacidad/` → 200; `/privacidad` → 301 a `/privacidad/`.
+- Fuente del texto: repo privado `ayra-whatsapp` (`docs/legal/`). Si cambia la política, actualizar allá y copiar aquí.
+
 ## Pendiente
 
 ### 🔴 Urgente (fuga de datos)
@@ -111,4 +119,5 @@ Ver `REVISION-2026-08-12.md` en la raíz del repo para el informe completo.
 - **Auth en SPA estático:** Se optó por hash SHA-256 del string `"usuario:contraseña"` almacenado en variable de entorno Vite. Es la mejor solución sin backend — el hash es irreversible y la contraseña no aparece en el código.
 - **Dashboard refactor:** Se preservó 100% de la funcionalidad visual. No se cambió ningún comportamiento, solo se reorganizó el código en componentes cohesivos.
 - **Calendario de ocupación:** Las habitaciones se derivan dinámicamente de los contratos históricos. Limitación conocida: habitaciones que nunca han tenido contrato no aparecen.
+- **Política de datos como HTML estático, no ruta React:** con `HashRouter`, una ruta `#/privacidad` no tendría URL limpia. `public/privacidad/index.html` se copia tal cual a `dist/` y GitHub Pages lo sirve directo. Los enlaces usan `<a href="/privacidad/">`, no `<Link>`, porque `<Link>` lo convertiría en `#/privacidad/`.
 - **Número de WhatsApp:** Se unificó a `573028366373` en CTASection y Contact (ya estaba correcto en WhatsAppButton y en el panel de contacto info).

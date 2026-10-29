@@ -204,7 +204,15 @@ const Contact = () => {
                   />
                   <div>
                     <label htmlFor="acceptPrivacy" className="text-sm text-foreground cursor-pointer">
-                      Autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012
+                      Autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012 y la{" "}
+                      <a
+                        href="/privacidad/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline text-primary hover:text-primary/80"
+                      >
+                        política de tratamiento de datos
+                      </a>
                     </label>
                     {errors.acceptPrivacy && (
                       <p className="text-red-500 text-xs mt-1">{errors.acceptPrivacy.message}</p>

@@ -90,6 +90,7 @@ Ver `REVISION-2026-08-12.md` en la raíz del repo para el informe completo.
 - `sitemap.xml`: agrega `https://ayracoliving.com/privacidad/`.
 - Verificado en producción: `/privacidad/` → 200; `/privacidad` → 301 a `/privacidad/`.
 - Fuente del texto: repo privado `ayra-whatsapp` (`docs/legal/`). Si cambia la política, actualizar allá y copiar aquí.
+- v2 publicada el 24 nov 2026 (§3, §4, §6, §9 y "Última actualización"); `#derechos` y enlace de regreso conservados, verificada en producción.
 
 ## Pendiente
 
